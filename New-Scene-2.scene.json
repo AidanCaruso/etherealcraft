@@ -565,7 +565,7 @@
         {
           "name": "system",
           "props": {
-            "filePath": "__$project$__/ajc-voxel-terrain/src/systems/VoxelChunkSystem.ts"
+            "filePath": "__$project$__/etherealcraft/src/systems/VoxelChunkSystem.ts"
           }
         },
         {
