@@ -11,8 +11,9 @@ export const vertexShader = `
 export const fragmentShader = `
     varying vec3 vUv; 
     in vec2 uv;
-
+    vec3 colors[3] = vec3[3](vec3(0.2, 0.15, 0.1), vec3(0.4, 0.95, 0.1), vec3(0.25, 0.25, 0.25));
     void main() {
-      gl_FragColor = vec4(vUv * 0.5, 1.0); 
+      int index = int(vUv.x);
+      gl_FragColor = vec4(colors[index], 1.0); 
     }
-  `
+  ` 
