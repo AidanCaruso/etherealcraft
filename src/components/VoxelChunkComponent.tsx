@@ -8,7 +8,8 @@ import { BodyTypes, ColliderOptions } from "@etherealengine/spatial/src/physics/
 import { addObjectToGroup } from "@etherealengine/spatial/src/renderer/components/GroupComponent"
 import { MeshComponent } from "@etherealengine/spatial/src/renderer/components/MeshComponent"
 import { VisibleComponent } from "@etherealengine/spatial/src/renderer/components/VisibleComponent"
-import { Mesh, BufferGeometry, BufferAttribute, MeshStandardMaterial, MathUtils, Vector3 } from "three"
+import { Mesh, BufferGeometry, BufferAttribute, MeshStandardMaterial, MathUtils, Vector3, ShaderMaterial } from "three"
+import { fragmentShader, vertexShader } from "../shaders/VoxelTerrainShader"
 
 export const VoxelComponent = defineComponent({
   name: 'Voxel Manager',
@@ -31,7 +32,7 @@ export const VoxelComponent = defineComponent({
   },
 
   chunkSize: 32,
-  tileSize: 16,
+  tileSize: 1,
   tileTextureSize: 64,
 
   cubeFaces: [
@@ -153,10 +154,10 @@ export const VoxelComponent = defineComponent({
     const positions = [] as number[]
     const normals = [] as number[]
     const uvs = [] as number[]
-    const indices = [] as number[];
-    const startX = chunkX * VoxelComponent.chunkSize;
-    const startY = chunkY * VoxelComponent.chunkSize;
-    const startZ = chunkZ * VoxelComponent.chunkSize;
+    const indices = [] as number[]
+    const startX = chunkX * VoxelComponent.chunkSize
+    const startY = chunkY * VoxelComponent.chunkSize
+    const startZ = chunkZ * VoxelComponent.chunkSize
     for (let x = 0; x < VoxelComponent.chunkSize; x++) {
       const voxelX = startX + x
       for (let y = 0; y < VoxelComponent.chunkSize; y++) {
@@ -166,27 +167,27 @@ export const VoxelComponent = defineComponent({
           const voxel = VoxelComponent.getVoxel(voxelX, voxelY, voxelZ);
           if (voxel) {
             // voxel 0 is sky (empty) so for UVs we start at 0
-            const uvVoxel = voxel - 1;
+            const uvVoxel = voxel - 1
             // There is a voxel here but do we need faces for it?
             for (const { dir, corners, uvRow } of VoxelComponent.cubeFaces) {
               const neighbor = VoxelComponent.getVoxel(
                 voxelX + dir[0],
                 voxelY + dir[1],
-                voxelZ + dir[2]);
+                voxelZ + dir[2])
               if (!neighbor) {
                 // this voxel has no neighbor in this direction so we need a face
                 const ndx = positions.length / 3;
                 for (const { pos, uv } of corners) {
-                  positions.push(pos[0] + x, pos[1] + y, pos[2] + z);
-                  normals.push(...dir);
+                  positions.push(pos[0] + x, pos[1] + y, pos[2] + z)
+                  normals.push(...dir)
                   uvs.push(
-                    (uvVoxel + uv[0]) * VoxelComponent.tileSize / VoxelComponent.tileTextureSize,
-                    1 - (uvRow + 1 - uv[1]) * VoxelComponent.tileSize / VoxelComponent.tileTextureSize);
+                    (uvVoxel + uv[0]),
+                    1 - (uvRow + 1 - uv[1]))
                 }
                 indices.push(
                   ndx, ndx + 1, ndx + 2,
                   ndx + 2, ndx + 1, ndx + 3,
-                );
+                )
               }
             }
           }
@@ -199,7 +200,7 @@ export const VoxelComponent = defineComponent({
       normals,
       uvs,
       indices,
-    };
+    }
   },
 
   neighborOffsets: [
@@ -255,6 +256,7 @@ export const VoxelComponent = defineComponent({
         new BufferAttribute(new Float32Array(1), uvNumComponents));
 
       const mesh = new Mesh(geometry, new MeshStandardMaterial())
+      ;(mesh.material as any) = new ShaderMaterial({vertexShader: vertexShader, fragmentShader: fragmentShader})
       mesh.name = chunkId
       VoxelComponent.chunkIdToEntity[chunkId] = entity
       setComponent(entity, MeshComponent, mesh)
