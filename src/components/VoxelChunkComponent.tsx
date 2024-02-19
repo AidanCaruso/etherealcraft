@@ -8,8 +8,8 @@ import { BodyTypes, ColliderOptions } from "@etherealengine/spatial/src/physics/
 import { addObjectToGroup } from "@etherealengine/spatial/src/renderer/components/GroupComponent"
 import { MeshComponent } from "@etherealengine/spatial/src/renderer/components/MeshComponent"
 import { VisibleComponent } from "@etherealengine/spatial/src/renderer/components/VisibleComponent"
-import { Mesh, BufferGeometry, BufferAttribute, MeshStandardMaterial, MathUtils, Vector3, ShaderMaterial } from "three"
-import { fragmentShader, vertexShader } from "../shaders/VoxelTerrainShader"
+import { Mesh, BufferGeometry, BufferAttribute, MeshStandardMaterial, MathUtils, Vector3, ShaderMaterial, UniformsLib } from "three"
+import { vertexShader, fragmentShader } from "../shaders/VoxelTerrainShader"
 
 export const VoxelComponent = defineComponent({
   name: 'Voxel Manager',
@@ -256,7 +256,7 @@ export const VoxelComponent = defineComponent({
         new BufferAttribute(new Float32Array(1), uvNumComponents));
 
       const mesh = new Mesh(geometry, new MeshStandardMaterial())
-      ;(mesh.material as any) = new ShaderMaterial({vertexShader: vertexShader, fragmentShader: fragmentShader})
+      ;(mesh.material as any) = new ShaderMaterial({uniforms: UniformsLib.lights, vertexShader: vertexShader, fragmentShader: fragmentShader})
       mesh.name = chunkId
       VoxelComponent.chunkIdToEntity[chunkId] = entity
       setComponent(entity, MeshComponent, mesh)
