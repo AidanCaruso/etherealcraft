@@ -15,16 +15,6 @@ export const VoxelChunkNodeEditor: EditorComponentType = (props) => {
       value= {new Color()}
     />
   </InputGroup>
-  <InputGroup name="Speed" label="Bubble Speed">
-    <NumericInput
-      value={1}
-    />
-  </InputGroup>
-  <InputGroup name="Direction" label="Bubble Direction">
-    <Vector3Input
-      value={new Vector3()}
-    />
-  </InputGroup>
 </NodeEditor>
 }
 

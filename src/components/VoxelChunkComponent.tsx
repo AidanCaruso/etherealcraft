@@ -10,26 +10,25 @@ import { MeshComponent } from "@etherealengine/spatial/src/renderer/components/M
 import { VisibleComponent } from "@etherealengine/spatial/src/renderer/components/VisibleComponent"
 import { Mesh, BufferGeometry, BufferAttribute, MeshStandardMaterial, MathUtils, Vector3, ShaderMaterial, UniformsLib } from "three"
 import { vertexShader, fragmentShader } from "../shaders/VoxelTerrainShader"
+import { NameComponent } from "@etherealengine/spatial/src/common/NameComponent"
 
 export const VoxelComponent = defineComponent({
   name: 'Voxel Manager',
   jsonID: "voxelManager",
   onInit: (entity) => {
-    return {
-
-    }
+    return true
   },
 
-  onSet: (entity, component, json) => {
-    if (!json) return
+  // onSet: (entity, component, json) => {
+  //   if (!json) return
 
-  },
+  // },
 
-  toJSON: (entity, component) => {
-    return {
+  // toJSON: (entity, component) => {
+  //   return {
 
-    }
-  },
+  //   }
+  // },
 
   chunkSize: 32,
   tileSize: 1,
@@ -260,8 +259,8 @@ export const VoxelComponent = defineComponent({
       mesh.name = chunkId
       VoxelComponent.chunkIdToEntity[chunkId] = entity
       setComponent(entity, MeshComponent, mesh)
+      setComponent(entity, NameComponent, 'Voxel Chunk')
       setComponent(entity, VisibleComponent, true)
-      setComponent(entity, TransformComponent, { position: new Vector3(chunkX * VoxelComponent.chunkSize, chunkY * VoxelComponent.chunkSize, chunkZ * VoxelComponent.chunkSize) })
       addObjectToGroup(entity, mesh)
     }
 
@@ -274,10 +273,14 @@ export const VoxelComponent = defineComponent({
     geometry.setAttribute('uv', new BufferAttribute(new Float32Array(uvs), 2))
     geometry.getAttribute('uv').needsUpdate = true;
     geometry.setIndex(indices);
-    setComponent(entity, RigidBodyComponent, { type: BodyTypes.Fixed })
+
+    setComponent(entity, RigidBodyComponent, { type: BodyTypes.Fixed})
     setComponent(entity, ColliderComponent, {
-      shape: 'mesh', collisionLayer: CollisionGroups.Ground,
-      collisionMask: CollisionGroups.Default | CollisionGroups.Avatars
+     shape: 'mesh', collisionLayer: CollisionGroups.Ground,
+     collisionMask: CollisionGroups.Default | CollisionGroups.Avatars,
+     
     })
+    setComponent(entity, TransformComponent, { position: new Vector3(chunkX * VoxelComponent.chunkSize, chunkY * VoxelComponent.chunkSize, chunkZ * VoxelComponent.chunkSize) })
+
   }
 })

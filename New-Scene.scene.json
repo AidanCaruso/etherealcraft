@@ -493,44 +493,6 @@
       "parent": "d32b1c4e-d08e-4fb0-9107-4c88a281ee71",
       "index": 5,
       "name": "directional light"
-    },
-    "faa34c5d-7a85-471f-8f23-30caa169f905": {
-      "name": "transform",
-      "components": [
-        {
-          "name": "transform",
-          "props": {
-            "position": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "rotation": {
-              "x": 0,
-              "y": 0,
-              "z": 0,
-              "w": 1
-            },
-            "scale": {
-              "x": 1,
-              "y": 1,
-              "z": 1
-            }
-          }
-        },
-        {
-          "name": "visible",
-          "props": true
-        },
-        {
-          "name": "system",
-          "props": {
-            "filePath": "__$project$__/ajc-voxel-terrain/src/systems/VoxelChunkSystem.tsx"
-          }
-        }
-      ],
-      "parent": "d32b1c4e-d08e-4fb0-9107-4c88a281ee71",
-      "index": 6
     }
   },
   "root": "d32b1c4e-d08e-4fb0-9107-4c88a281ee71"
