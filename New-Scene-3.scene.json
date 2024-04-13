@@ -5,7 +5,7 @@
       "components": [],
       "name": "default"
     },
-    "6a179e7d-f5fb-4008-9b66-ac33781e5fe5": {
+    "c0938dbc-8e2d-4b42-8358-6f3e656834b3": {
       "name": "Settings",
       "components": [
         {
@@ -274,7 +274,7 @@
           }
         },
         {
-          "name": "scene-preview-camera",
+          "name": "EE_scene_preview_camera",
           "props": {}
         }
       ],
@@ -330,7 +330,7 @@
       ],
       "parent": "d32b1c4e-d08e-4fb0-9107-4c88a281ee71",
       "index": 2,
-      "name": "skybox"
+      "name": "EE_skybox"
     },
     "38793f94-0b92-4ea1-af7b-5ec0e117628d": {
       "components": [
@@ -384,9 +384,9 @@
           "name": "EE_transform",
           "props": {
             "position": {
-              "x": 68.5,
-              "y": 27.5,
-              "z": 64
+              "x": 0,
+              "y": 0,
+              "z": 0
             },
             "rotation": {
               "x": -5.053215498074303e-16,
@@ -402,14 +402,14 @@
           }
         },
         {
+          "name": "EE_visible",
+          "props": {}
+        },
+        {
           "name": "EE_spawn_point",
           "props": {
             "permissionedUsers": []
           }
-        },
-        {
-          "name": "EE_visible",
-          "props": true
         }
       ],
       "parent": "d32b1c4e-d08e-4fb0-9107-4c88a281ee71",
@@ -500,8 +500,8 @@
       "index": 6,
       "name": "directional light"
     },
-    "151c6fda-8192-4587-ba8d-27a056d5768c": {
-      "name": "transform",
+    "39a1dd98-a77c-460c-a637-8247b87a7417": {
+      "name": "EE_transform",
       "components": [
         {
           "name": "EE_transform",
@@ -525,24 +525,54 @@
           }
         },
         {
-          "name": "voxelChunk",
-          "props": {
-            "cellSize": 32,
-            "tileSize": 16,
-            "cells": {}
-          }
+          "name": "EE_visible",
+          "props": true
         },
         {
           "name": "voxelManager",
-          "props": {}
-        },
-        {
-          "name": "EE_visible",
-          "props": true
+          "props": null
         }
       ],
       "parent": "d32b1c4e-d08e-4fb0-9107-4c88a281ee71",
       "index": 7
+    },
+    "2554361e-b2bc-4483-bf10-8edd5d9d18f1": {
+      "name": "EE_transform",
+      "components": [
+        {
+          "name": "EE_transform",
+          "props": {
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            },
+            "scale": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+            }
+          }
+        },
+        {
+          "name": "EE_visible",
+          "props": true
+        },
+        {
+          "name": "EE_system",
+          "props": {
+            "filePath": "__$project$__/etherealcraft/src/systems/VoxelChunkSystem.ts"
+          }
+        }
+      ],
+      "parent": "d32b1c4e-d08e-4fb0-9107-4c88a281ee71",
+      "index": 8
     }
   },
   "root": "d32b1c4e-d08e-4fb0-9107-4c88a281ee71"

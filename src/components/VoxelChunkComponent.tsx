@@ -1,4 +1,4 @@
-import { Entity, createEntity, defineComponent, getComponent, getMutableComponent, setComponent } from "@etherealengine/ecs"
+import { Engine, Entity, createEntity, defineComponent, getComponent, getMutableComponent, setComponent } from "@etherealengine/ecs"
 import { TransformComponent } from "@etherealengine/spatial"
 import { Physics } from "@etherealengine/spatial/src/physics/classes/Physics"
 import { ColliderComponent } from "@etherealengine/spatial/src/physics/components/ColliderComponent"
@@ -11,6 +11,9 @@ import { VisibleComponent } from "@etherealengine/spatial/src/renderer/component
 import { Mesh, BufferGeometry, BufferAttribute, MeshStandardMaterial, MathUtils, Vector3, ShaderMaterial, UniformsLib } from "three"
 import { vertexShader, fragmentShader } from "../shaders/VoxelTerrainShader"
 import { NameComponent } from "@etherealengine/spatial/src/common/NameComponent"
+import { ObjectLayerComponents, ObjectLayerMaskComponent, enableObjectLayer } from "@etherealengine/spatial/src/renderer/components/ObjectLayerComponent"
+import { ObjectLayers } from "@etherealengine/spatial/src/renderer/constants/ObjectLayers"
+import { EntityTreeComponent } from "@etherealengine/spatial/src/transform/components/EntityTree"
 
 export const VoxelComponent = defineComponent({
   name: 'Voxel Manager',
@@ -213,11 +216,11 @@ export const VoxelComponent = defineComponent({
   ],
 
   updateVoxelGeometry(x, y, z, entity: Entity) {
-    const updatedChunkIds = {};
+    const updatedChunkIds = {}
     for (const offset of VoxelComponent.neighborOffsets) {
-      const ox = x + offset[0];
-      const oy = y + offset[1];
-      const oz = z + offset[2];
+      const ox = x + offset[0]
+      const oy = y + offset[1]
+      const oz = z + offset[2]
       const chunkId = VoxelComponent.computeChunkId(ox, oy, oz);
       if (!updatedChunkIds[chunkId]) {
         updatedChunkIds[chunkId] = true;
@@ -238,9 +241,9 @@ export const VoxelComponent = defineComponent({
     let entity = VoxelComponent.chunkIdToEntity[chunkId]
     if (!entity) {
       const geometry = new BufferGeometry();
-      const positionNumComponents = 3;
-      const normalNumComponents = 3;
-      const uvNumComponents = 2;
+      const positionNumComponents = 3
+      const normalNumComponents = 3
+      const uvNumComponents = 2
 
       entity = createEntity()
 
@@ -267,19 +270,19 @@ export const VoxelComponent = defineComponent({
     const { positions, normals, uvs, indices } = VoxelComponent.generateGeometryDataForChunk(chunkX, chunkY, chunkZ);
     const geometry = getComponent(entity, MeshComponent).geometry
     geometry.setAttribute('position', new BufferAttribute(new Float32Array(positions), 3))
-    geometry.getAttribute('position').needsUpdate = true;
+    geometry.getAttribute('position').needsUpdate = true
     geometry.setAttribute('normal', new BufferAttribute(new Float32Array(normals), 3))
-    geometry.getAttribute('normal').needsUpdate = true;
+    geometry.getAttribute('normal').needsUpdate = true
     geometry.setAttribute('uv', new BufferAttribute(new Float32Array(uvs), 2))
-    geometry.getAttribute('uv').needsUpdate = true;
-    geometry.setIndex(indices);
-
+    geometry.getAttribute('uv').needsUpdate = true
+    geometry.setIndex(indices)
     setComponent(entity, RigidBodyComponent, { type: BodyTypes.Fixed})
     setComponent(entity, ColliderComponent, {
      shape: 'mesh', collisionLayer: CollisionGroups.Ground,
      collisionMask: CollisionGroups.Default | CollisionGroups.Avatars,
      
     })
+    setComponent(entity, EntityTreeComponent, {parentEntity: Engine.instance.originEntity})
     setComponent(entity, TransformComponent, { position: new Vector3(chunkX * VoxelComponent.chunkSize, chunkY * VoxelComponent.chunkSize, chunkZ * VoxelComponent.chunkSize) })
 
   }

@@ -1,10 +1,9 @@
-import { defineQuery, defineSystem, getComponent, PresentationSystemGroup, SimulationSystemGroup } from "@etherealengine/ecs"
+import { defineQuery, defineSystem, getComponent, PresentationSystemGroup, SimulationSystemGroup, useQuery } from "@etherealengine/ecs"
 import {useEffect} from 'react'
 import { VoxelComponent } from "../components/VoxelChunkComponent"
 import { BufferGeometry, BufferAttribute, Mesh, MeshStandardMaterial } from "three"
 import { addObjectToGroup } from "@etherealengine/spatial/src/renderer/components/GroupComponent"
 
-const ChunkQuery = defineQuery([VoxelComponent])
 export default defineSystem({
   uuid: 'VoxelChunkSystem',
   insert: { after: SimulationSystemGroup },
@@ -13,8 +12,9 @@ export default defineSystem({
   },
 
   reactor: () => {
+    const chunkQuery = useQuery([VoxelComponent])
     useEffect( () => {
-      const entity = ChunkQuery()[0]
+      if(chunkQuery.length === 0) return
 
       const {chunkSize, setVoxel, updateChunkGeometry} = VoxelComponent
 
@@ -39,7 +39,7 @@ export default defineSystem({
           }
         }
       }
-    }, [])
+    }, [chunkQuery])
     return null
   }
 })
