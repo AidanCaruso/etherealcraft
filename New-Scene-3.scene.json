@@ -384,9 +384,9 @@
           "name": "EE_transform",
           "props": {
             "position": {
-              "x": 0,
-              "y": 0,
-              "z": 0
+              "x": 47.1,
+              "y": 33.6,
+              "z": 42.300000000000004
             },
             "rotation": {
               "x": -5.053215498074303e-16,
@@ -402,14 +402,14 @@
           }
         },
         {
-          "name": "EE_visible",
-          "props": {}
-        },
-        {
           "name": "EE_spawn_point",
           "props": {
             "permissionedUsers": []
           }
+        },
+        {
+          "name": "EE_visible",
+          "props": true
         }
       ],
       "parent": "d32b1c4e-d08e-4fb0-9107-4c88a281ee71",

@@ -6,4 +6,5 @@ import { VoxelChunkNodeEditor } from "./components/VoxelChunkNodeEditor"
 if(isClient) {
   import('../engine/RegisterVoxelPrefab')
   import('../src/systems/VoxelChunkSystem')
+  import('../src/systems/VoxelInputSystem')
 }

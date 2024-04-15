@@ -1,15 +1,43 @@
-import { defineQuery, defineSystem, getComponent, PresentationSystemGroup, SimulationSystemGroup, useQuery } from "@etherealengine/ecs"
+import { defineSystem, EntityUUID, SimulationSystemGroup, useQuery } from "@etherealengine/ecs"
 import {useEffect} from 'react'
-import { VoxelComponent } from "../components/VoxelChunkComponent"
-import { BufferGeometry, BufferAttribute, Mesh, MeshStandardMaterial } from "three"
-import { addObjectToGroup } from "@etherealengine/spatial/src/renderer/components/GroupComponent"
+import { matchesVector, Vector, VoxelComponent } from "../components/VoxelChunkComponent"
+import { defineAction, defineState, getMutableState, matches, none, useHookstate } from "@etherealengine/hyperflux"
+import { NetworkTopics } from "@etherealengine/network"
+
+export const VoxelActions = {
+  setVoxel: defineAction({    type: 'SetVoxel',
+  position: matchesVector,
+  id: matches.number,
+  $topic: NetworkTopics.world}
+  )
+}
+
+export const VoxelState = defineState({
+  name: 'VoxelState',
+
+  initial: [] as {position: Vector, id: number}[],
+
+  receptors: {
+    onSetVoxel: VoxelActions.setVoxel.receive((action) => {
+      getMutableState(VoxelState).merge([{id: action.id, position: action.position}])
+    })
+  },
+
+  reactor: () => {
+    const voxelState = useHookstate(getMutableState(VoxelState))
+    useEffect(() => {
+      if(voxelState.value.length === 0) return
+      const  {position, id} = voxelState.value[voxelState.length-1]
+      VoxelComponent.setVoxel(position.x, position.y, position.z, id)
+      VoxelComponent.updateVoxelGeometry(position.x, position.y, position.z)
+    }, [voxelState])
+    return null
+  }
+})
 
 export default defineSystem({
   uuid: 'VoxelChunkSystem',
   insert: { after: SimulationSystemGroup },
-  execute: () => {
-
-  },
 
   reactor: () => {
     const chunkQuery = useQuery([VoxelComponent])
@@ -40,6 +68,7 @@ export default defineSystem({
         }
       }
     }, [chunkQuery])
+
     return null
   }
 })

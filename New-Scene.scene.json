@@ -2,9 +2,14 @@
   "version": 0,
   "entities": {
     "d32b1c4e-d08e-4fb0-9107-4c88a281ee71": {
+      "components": [],
+      "name": "default"
+    },
+    "87003282-ad6b-426e-bebc-19bbe90bc714": {
+      "name": "Settings",
       "components": [
         {
-          "name": "transform",
+          "name": "EE_transform",
           "props": {
             "position": {
               "x": 0,
@@ -25,7 +30,7 @@
           }
         },
         {
-          "name": "envmapbake",
+          "name": "EE_envmapbake",
           "props": {
             "bakePosition": {
               "x": 0,
@@ -50,7 +55,7 @@
           }
         },
         {
-          "name": "fog",
+          "name": "EE_fog",
           "props": {
             "type": "linear",
             "color": "#FFFFFF",
@@ -62,7 +67,7 @@
           }
         },
         {
-          "name": "camera-settings",
+          "name": "EE_camera_settings",
           "props": {
             "fov": 50,
             "cameraNearClip": 0.1,
@@ -78,7 +83,7 @@
           }
         },
         {
-          "name": "postprocessing",
+          "name": "EE_postprocessing",
           "props": {
             "enabled": false,
             "effects": {
@@ -206,7 +211,7 @@
           }
         },
         {
-          "name": "media-settings",
+          "name": "EE_media_settings",
           "props": {
             "immersiveMedia": false,
             "refDistance": 20,
@@ -219,7 +224,7 @@
           }
         },
         {
-          "name": "render-settings",
+          "name": "EE_render_settings",
           "props": {
             "csm": true,
             "toneMapping": 1,
@@ -228,7 +233,7 @@
           }
         },
         {
-          "name": "scene-settings",
+          "name": "EE_scene_settings",
           "props": {
             "thumbnailURL": "__$project$__/default-project/default.thumbnail.jpg",
             "loadingScreenURL": "__$project$__/default-project/default.loadingscreen.ktx2",
@@ -238,16 +243,17 @@
           }
         },
         {
-          "name": "visible",
+          "name": "EE_visible",
           "props": true
         }
       ],
-      "name": "default"
+      "parent": "d32b1c4e-d08e-4fb0-9107-4c88a281ee71",
+      "index": 0
     },
     "bb362197-f14d-4da7-9c3c-1ed834386423": {
       "components": [
         {
-          "name": "transform",
+          "name": "EE_transform",
           "props": {
             "position": {
               "x": 0,
@@ -273,13 +279,13 @@
         }
       ],
       "parent": "d32b1c4e-d08e-4fb0-9107-4c88a281ee71",
-      "index": 0,
+      "index": 1,
       "name": "scene preview camera"
     },
     "e7d6bfb1-6390-4a8b-b744-da83b059c2d3": {
       "components": [
         {
-          "name": "transform",
+          "name": "EE_transform",
           "props": {
             "position": {
               "x": 0,
@@ -300,11 +306,11 @@
           }
         },
         {
-          "name": "visible",
+          "name": "EE_visible",
           "props": {}
         },
         {
-          "name": "skybox",
+          "name": "EE_skybox",
           "props": {
             "backgroundColor": 0,
             "equirectangularPath": "",
@@ -323,13 +329,13 @@
         }
       ],
       "parent": "d32b1c4e-d08e-4fb0-9107-4c88a281ee71",
-      "index": 1,
+      "index": 2,
       "name": "skybox"
     },
     "38793f94-0b92-4ea1-af7b-5ec0e117628d": {
       "components": [
         {
-          "name": "transform",
+          "name": "EE_transform",
           "props": {
             "position": {
               "x": 0,
@@ -350,18 +356,18 @@
           }
         },
         {
-          "name": "visible",
+          "name": "EE_visible",
           "props": {}
         },
         {
-          "name": "ground-plane",
+          "name": "EE_ground_plane",
           "props": {
             "color": 8311585,
             "visible": true
           }
         },
         {
-          "name": "shadow",
+          "name": "EE_shadow",
           "props": {
             "cast": false,
             "receive": true
@@ -369,18 +375,18 @@
         }
       ],
       "parent": "d32b1c4e-d08e-4fb0-9107-4c88a281ee71",
-      "index": 2,
+      "index": 3,
       "name": "ground plane"
     },
     "3e8a430e-9dcf-440e-990c-44ecb8051762": {
       "components": [
         {
-          "name": "transform",
+          "name": "EE_transform",
           "props": {
             "position": {
-              "x": 0,
-              "y": 0,
-              "z": 0
+              "x": 16.200000000000003,
+              "y": 49.300000000000004,
+              "z": 14.9
             },
             "rotation": {
               "x": -5.053215498074303e-16,
@@ -396,24 +402,24 @@
           }
         },
         {
-          "name": "visible",
-          "props": {}
-        },
-        {
-          "name": "spawn-point",
+          "name": "EE_spawn_point",
           "props": {
             "permissionedUsers": []
           }
+        },
+        {
+          "name": "EE_visible",
+          "props": true
         }
       ],
       "parent": "d32b1c4e-d08e-4fb0-9107-4c88a281ee71",
-      "index": 3,
+      "index": 4,
       "name": "spawn point"
     },
     "f77dc4c6-c9a6-433d-8102-4a9a8e1c0ce9": {
       "components": [
         {
-          "name": "transform",
+          "name": "EE_transform",
           "props": {
             "position": {
               "x": 0,
@@ -434,11 +440,11 @@
           }
         },
         {
-          "name": "visible",
+          "name": "EE_visible",
           "props": {}
         },
         {
-          "name": "hemisphere-light",
+          "name": "EE_hemisphere_light",
           "props": {
             "skyColor": 16777215,
             "groundColor": 16777215,
@@ -447,13 +453,13 @@
         }
       ],
       "parent": "d32b1c4e-d08e-4fb0-9107-4c88a281ee71",
-      "index": 4,
+      "index": 5,
       "name": "hemisphere light"
     },
     "cb045cfd-8daf-4a2b-b764-35625be54a11": {
       "components": [
         {
-          "name": "transform",
+          "name": "EE_transform",
           "props": {
             "position": {
               "x": 0,
@@ -474,7 +480,7 @@
           }
         },
         {
-          "name": "directional-light",
+          "name": "EE_directional_light",
           "props": {
             "color": 16777215,
             "intensity": 1,
@@ -486,12 +492,12 @@
           }
         },
         {
-          "name": "visible",
+          "name": "EE_visible",
           "props": true
         }
       ],
       "parent": "d32b1c4e-d08e-4fb0-9107-4c88a281ee71",
-      "index": 5,
+      "index": 6,
       "name": "directional light"
     }
   },

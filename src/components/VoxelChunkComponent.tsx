@@ -1,4 +1,4 @@
-import { Engine, Entity, createEntity, defineComponent, getComponent, getMutableComponent, setComponent } from "@etherealengine/ecs"
+import { Engine, Entity, createEntity, defineComponent, getComponent, getMutableComponent, hasComponent, removeComponent, setComponent } from "@etherealengine/ecs"
 import { TransformComponent } from "@etherealengine/spatial"
 import { Physics } from "@etherealengine/spatial/src/physics/classes/Physics"
 import { ColliderComponent } from "@etherealengine/spatial/src/physics/components/ColliderComponent"
@@ -14,6 +14,16 @@ import { NameComponent } from "@etherealengine/spatial/src/common/NameComponent"
 import { ObjectLayerComponents, ObjectLayerMaskComponent, enableObjectLayer } from "@etherealengine/spatial/src/renderer/components/ObjectLayerComponent"
 import { ObjectLayers } from "@etherealengine/spatial/src/renderer/constants/ObjectLayers"
 import { EntityTreeComponent } from "@etherealengine/spatial/src/transform/components/EntityTree"
+import { matches } from "@etherealengine/hyperflux"
+
+export const axes = ['x', 'y', 'z'] as const
+export type Vector = {x: number, y: number, z: number}
+const matchesVectorShape = matches.shape({
+  x: matches.number,
+  y: matches.number,
+  z: matches.number
+})
+export const matchesVector = matches.guard((v): v is Vector => matchesVectorShape.test(v))
 
 export const VoxelComponent = defineComponent({
   name: 'Voxel Manager',
@@ -215,7 +225,7 @@ export const VoxelComponent = defineComponent({
     [0, 0, 1], // front
   ],
 
-  updateVoxelGeometry(x, y, z, entity: Entity) {
+  updateVoxelGeometry(x, y, z) {
     const updatedChunkIds = {}
     for (const offset of VoxelComponent.neighborOffsets) {
       const ox = x + offset[0]
@@ -277,13 +287,13 @@ export const VoxelComponent = defineComponent({
     geometry.getAttribute('uv').needsUpdate = true
     geometry.setIndex(indices)
     setComponent(entity, RigidBodyComponent, { type: BodyTypes.Fixed})
+    if(hasComponent(entity, ColliderComponent)) removeComponent(entity, ColliderComponent)
     setComponent(entity, ColliderComponent, {
      shape: 'mesh', collisionLayer: CollisionGroups.Ground,
-     collisionMask: CollisionGroups.Default | CollisionGroups.Avatars,
-     
+     collisionMask: CollisionGroups.Default | CollisionGroups.Avatars
     })
     setComponent(entity, EntityTreeComponent, {parentEntity: Engine.instance.originEntity})
     setComponent(entity, TransformComponent, { position: new Vector3(chunkX * VoxelComponent.chunkSize, chunkY * VoxelComponent.chunkSize, chunkZ * VoxelComponent.chunkSize) })
 
-  }
+  },
 })
