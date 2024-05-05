@@ -1,23 +1,39 @@
-import { Engine, Entity, createEntity, defineComponent, getComponent, getMutableComponent, hasComponent, removeComponent, setComponent } from "@etherealengine/ecs"
-import { TransformComponent } from "@etherealengine/spatial"
-import { Physics } from "@etherealengine/spatial/src/physics/classes/Physics"
-import { ColliderComponent } from "@etherealengine/spatial/src/physics/components/ColliderComponent"
-import { RigidBodyComponent } from "@etherealengine/spatial/src/physics/components/RigidBodyComponent"
-import { CollisionGroups } from "@etherealengine/spatial/src/physics/enums/CollisionGroups"
-import { BodyTypes, ColliderOptions } from "@etherealengine/spatial/src/physics/types/PhysicsTypes"
-import { addObjectToGroup } from "@etherealengine/spatial/src/renderer/components/GroupComponent"
-import { MeshComponent } from "@etherealengine/spatial/src/renderer/components/MeshComponent"
-import { VisibleComponent } from "@etherealengine/spatial/src/renderer/components/VisibleComponent"
-import { Mesh, BufferGeometry, BufferAttribute, MeshStandardMaterial, MathUtils, Vector3, ShaderMaterial, UniformsLib } from "three"
-import { vertexShader, fragmentShader } from "../shaders/VoxelTerrainShader"
-import { NameComponent } from "@etherealengine/spatial/src/common/NameComponent"
-import { ObjectLayerComponents, ObjectLayerMaskComponent, enableObjectLayer } from "@etherealengine/spatial/src/renderer/components/ObjectLayerComponent"
-import { ObjectLayers } from "@etherealengine/spatial/src/renderer/constants/ObjectLayers"
-import { EntityTreeComponent } from "@etherealengine/spatial/src/transform/components/EntityTree"
-import { matches } from "@etherealengine/hyperflux"
+import {
+  Engine,
+  Entity,
+  createEntity,
+  defineComponent,
+  getComponent,
+  getOptionalComponent,
+  hasComponent,
+  removeComponent,
+  setComponent
+} from '@etherealengine/ecs'
+import { matches } from '@etherealengine/hyperflux'
+import { TransformComponent } from '@etherealengine/spatial'
+import { NameComponent } from '@etherealengine/spatial/src/common/NameComponent'
+import { ColliderComponent } from '@etherealengine/spatial/src/physics/components/ColliderComponent'
+import { RigidBodyComponent } from '@etherealengine/spatial/src/physics/components/RigidBodyComponent'
+import { CollisionGroups } from '@etherealengine/spatial/src/physics/enums/CollisionGroups'
+import { BodyTypes } from '@etherealengine/spatial/src/physics/types/PhysicsTypes'
+import { addObjectToGroup } from '@etherealengine/spatial/src/renderer/components/GroupComponent'
+import { MeshComponent } from '@etherealengine/spatial/src/renderer/components/MeshComponent'
+import { VisibleComponent } from '@etherealengine/spatial/src/renderer/components/VisibleComponent'
+import { EntityTreeComponent } from '@etherealengine/spatial/src/transform/components/EntityTree'
+import {
+  BufferAttribute,
+  BufferGeometry,
+  MathUtils,
+  Mesh,
+  MeshStandardMaterial,
+  ShaderMaterial,
+  UniformsLib,
+  Vector3
+} from 'three'
+import { fragmentShader, vertexShader } from '../shaders/VoxelTerrainShader'
 
 export const axes = ['x', 'y', 'z'] as const
-export type Vector = {x: number, y: number, z: number}
+export type Vector = { x: number; y: number; z: number }
 const matchesVectorShape = matches.shape({
   x: matches.number,
   y: matches.number,
@@ -27,97 +43,88 @@ export const matchesVector = matches.guard((v): v is Vector => matchesVectorShap
 
 export const VoxelComponent = defineComponent({
   name: 'Voxel Manager',
-  jsonID: "voxelManager",
-  onInit: (entity) => {
-    return true
-  },
-
-  // onSet: (entity, component, json) => {
-  //   if (!json) return
-
-  // },
-
-  // toJSON: (entity, component) => {
-  //   return {
-
-  //   }
-  // },
+  jsonID: 'voxelManager',
+  onInit: (entity) => {},
 
   chunkSize: 32,
   tileSize: 1,
   tileTextureSize: 64,
 
   cubeFaces: [
-    { // left
+    {
+      // left
       uvRow: 0,
-      dir: [-1, 0, 0,],
+      dir: [-1, 0, 0],
       corners: [
-        { pos: [0, 1, 0], uv: [0, 1], },
-        { pos: [0, 0, 0], uv: [0, 0], },
-        { pos: [0, 1, 1], uv: [1, 1], },
-        { pos: [0, 0, 1], uv: [1, 0], },
-      ],
+        { pos: [0, 1, 0], uv: [0, 1] },
+        { pos: [0, 0, 0], uv: [0, 0] },
+        { pos: [0, 1, 1], uv: [1, 1] },
+        { pos: [0, 0, 1], uv: [1, 0] }
+      ]
     },
-    { // right
+    {
+      // right
       uvRow: 0,
-      dir: [1, 0, 0,],
+      dir: [1, 0, 0],
       corners: [
-        { pos: [1, 1, 1], uv: [0, 1], },
-        { pos: [1, 0, 1], uv: [0, 0], },
-        { pos: [1, 1, 0], uv: [1, 1], },
-        { pos: [1, 0, 0], uv: [1, 0], },
-      ],
+        { pos: [1, 1, 1], uv: [0, 1] },
+        { pos: [1, 0, 1], uv: [0, 0] },
+        { pos: [1, 1, 0], uv: [1, 1] },
+        { pos: [1, 0, 0], uv: [1, 0] }
+      ]
     },
-    { // bottom
+    {
+      // bottom
       uvRow: 1,
-      dir: [0, -1, 0,],
+      dir: [0, -1, 0],
       corners: [
-        { pos: [1, 0, 1], uv: [1, 0], },
-        { pos: [0, 0, 1], uv: [0, 0], },
-        { pos: [1, 0, 0], uv: [1, 1], },
-        { pos: [0, 0, 0], uv: [0, 1], },
-      ],
+        { pos: [1, 0, 1], uv: [1, 0] },
+        { pos: [0, 0, 1], uv: [0, 0] },
+        { pos: [1, 0, 0], uv: [1, 1] },
+        { pos: [0, 0, 0], uv: [0, 1] }
+      ]
     },
-    { // top
+    {
+      // top
       uvRow: 2,
-      dir: [0, 1, 0,],
+      dir: [0, 1, 0],
       corners: [
-        { pos: [0, 1, 1], uv: [1, 1], },
-        { pos: [1, 1, 1], uv: [0, 1], },
-        { pos: [0, 1, 0], uv: [1, 0], },
-        { pos: [1, 1, 0], uv: [0, 0], },
-      ],
+        { pos: [0, 1, 1], uv: [1, 1] },
+        { pos: [1, 1, 1], uv: [0, 1] },
+        { pos: [0, 1, 0], uv: [1, 0] },
+        { pos: [1, 1, 0], uv: [0, 0] }
+      ]
     },
-    { // back
+    {
+      // back
       uvRow: 0,
-      dir: [0, 0, -1,],
+      dir: [0, 0, -1],
       corners: [
-        { pos: [1, 0, 0], uv: [0, 0], },
-        { pos: [0, 0, 0], uv: [1, 0], },
-        { pos: [1, 1, 0], uv: [0, 1], },
-        { pos: [0, 1, 0], uv: [1, 1], },
-      ],
+        { pos: [1, 0, 0], uv: [0, 0] },
+        { pos: [0, 0, 0], uv: [1, 0] },
+        { pos: [1, 1, 0], uv: [0, 1] },
+        { pos: [0, 1, 0], uv: [1, 1] }
+      ]
     },
-    { // front
+    {
+      // front
       uvRow: 0,
-      dir: [0, 0, 1,],
+      dir: [0, 0, 1],
       corners: [
-        { pos: [0, 0, 1], uv: [0, 0], },
-        { pos: [1, 0, 1], uv: [1, 0], },
-        { pos: [0, 1, 1], uv: [0, 1], },
-        { pos: [1, 1, 1], uv: [1, 1], },
-      ],
-    },
+        { pos: [0, 0, 1], uv: [0, 0] },
+        { pos: [1, 0, 1], uv: [1, 0] },
+        { pos: [0, 1, 1], uv: [0, 1] },
+        { pos: [1, 1, 1], uv: [1, 1] }
+      ]
+    }
   ],
 
   computeVoxelOffset(x, y, z) {
     const { chunkSize } = VoxelComponent
-    const voxelX = MathUtils.euclideanModulo(x, chunkSize) | 0;
-    const voxelY = MathUtils.euclideanModulo(y, chunkSize) | 0;
-    const voxelZ = MathUtils.euclideanModulo(z, chunkSize) | 0;
-    return voxelY * (chunkSize * chunkSize) +
-      voxelZ * chunkSize +
-      voxelX;
+    const voxelX = MathUtils.euclideanModulo(x, chunkSize) | 0
+    const voxelY = MathUtils.euclideanModulo(y, chunkSize) | 0
+    const voxelZ = MathUtils.euclideanModulo(z, chunkSize) | 0
+    return voxelY * (chunkSize * chunkSize) + voxelZ * chunkSize + voxelX
   },
 
   computeChunkId: (x, y, z) => {
@@ -127,39 +134,38 @@ export const VoxelComponent = defineComponent({
     return `${chunkX},${chunkY},${chunkZ}`
   },
 
-  addChunkForVoxel: (x, y, z) => {
+  setChunkAtVoxel: (x, y, z) => {
     const chunkId = VoxelComponent.computeChunkId(x, y, z)
-    let chunk = VoxelComponent.chunks[chunkId]
-    if (!chunk) {
-      chunk = new Uint8Array(VoxelComponent.chunkSize * VoxelComponent.chunkSize * VoxelComponent.chunkSize)
-      VoxelComponent.chunks[chunkId] = chunk
-    }
-    return chunk
+    const chunkEntity = createEntity()
+    setComponent(chunkEntity, VoxelChunkComponent, {
+      voxels: new Uint8Array(VoxelComponent.chunkSize * VoxelComponent.chunkSize * VoxelComponent.chunkSize)
+    })
+    setComponent(chunkEntity, NameComponent, 'Voxel Chunk')
+    VoxelComponent.chunkIdToEntity[chunkId] = chunkEntity
   },
 
-  getChunkForVoxel: (x, y, z) => {
-    return VoxelComponent.chunks[VoxelComponent.computeChunkId(x, y, z)]
+  getChunkAtVoxel: (x, y, z) => {
+    return getOptionalComponent(
+      VoxelComponent.chunkIdToEntity[VoxelComponent.computeChunkId(x, y, z)],
+      VoxelChunkComponent
+    )
   },
 
-  setVoxel: (x, y, z, v, addChunk = true) => {
-    let chunk = VoxelComponent.getChunkForVoxel(x, y, z);
-    if (!chunk) {
-      if (!addChunk) {
-        return;
-      }
-      chunk = VoxelComponent.addChunkForVoxel(x, y, z);
-    }
-    const voxelOffset = VoxelComponent.computeVoxelOffset(x, y, z);
-    chunk[voxelOffset] = v;
+  setVoxel: (x, y, z, v) => {
+    if (!VoxelComponent.chunkIdToEntity[VoxelComponent.computeChunkId(x, y, z)]) VoxelComponent.setChunkAtVoxel(x, y, z)
+    const chunk = VoxelComponent.getChunkAtVoxel(x, y, z)
+    if (!chunk) return
+    const voxelOffset = VoxelComponent.computeVoxelOffset(x, y, z)
+    chunk[voxelOffset] = v
   },
 
   getVoxel: (x, y, z) => {
-    const chunk = VoxelComponent.getChunkForVoxel(x, y, z);
+    const chunk = VoxelComponent.getChunkAtVoxel(x, y, z)
     if (!chunk) {
       return 0
     }
-    const voxelOffset = VoxelComponent.computeVoxelOffset(x, y, z);
-    return chunk[voxelOffset];
+    const voxelOffset = VoxelComponent.computeVoxelOffset(x, y, z)
+    return chunk[voxelOffset]
   },
 
   generateGeometryDataForChunk: (chunkX: number, chunkY: number, chunkZ: number) => {
@@ -176,30 +182,22 @@ export const VoxelComponent = defineComponent({
         const voxelY = startY + y
         for (let z = 0; z < VoxelComponent.chunkSize; z++) {
           const voxelZ = startZ + z
-          const voxel = VoxelComponent.getVoxel(voxelX, voxelY, voxelZ);
+          const voxel = VoxelComponent.getVoxel(voxelX, voxelY, voxelZ)
           if (voxel) {
             // voxel 0 is sky (empty) so for UVs we start at 0
             const uvVoxel = voxel - 1
             // There is a voxel here but do we need faces for it?
             for (const { dir, corners, uvRow } of VoxelComponent.cubeFaces) {
-              const neighbor = VoxelComponent.getVoxel(
-                voxelX + dir[0],
-                voxelY + dir[1],
-                voxelZ + dir[2])
+              const neighbor = VoxelComponent.getVoxel(voxelX + dir[0], voxelY + dir[1], voxelZ + dir[2])
               if (!neighbor) {
                 // this voxel has no neighbor in this direction so we need a face
-                const ndx = positions.length / 3;
+                const ndx = positions.length / 3
                 for (const { pos, uv } of corners) {
                   positions.push(pos[0] + x, pos[1] + y, pos[2] + z)
                   normals.push(...dir)
-                  uvs.push(
-                    (uvVoxel + uv[0]),
-                    1 - (uvRow + 1 - uv[1]))
+                  uvs.push(uvVoxel + uv[0], 1 - (uvRow + 1 - uv[1]))
                 }
-                indices.push(
-                  ndx, ndx + 1, ndx + 2,
-                  ndx + 2, ndx + 1, ndx + 3,
-                )
+                indices.push(ndx, ndx + 1, ndx + 2, ndx + 2, ndx + 1, ndx + 3)
               }
             }
           }
@@ -211,7 +209,7 @@ export const VoxelComponent = defineComponent({
       positions,
       normals,
       uvs,
-      indices,
+      indices
     }
   },
 
@@ -222,7 +220,7 @@ export const VoxelComponent = defineComponent({
     [0, -1, 0], // down
     [0, 1, 0], // up
     [0, 0, -1], // back
-    [0, 0, 1], // front
+    [0, 0, 1] // front
   ],
 
   updateVoxelGeometry(x, y, z) {
@@ -231,9 +229,9 @@ export const VoxelComponent = defineComponent({
       const ox = x + offset[0]
       const oy = y + offset[1]
       const oz = z + offset[2]
-      const chunkId = VoxelComponent.computeChunkId(ox, oy, oz);
+      const chunkId = VoxelComponent.computeChunkId(ox, oy, oz)
       if (!updatedChunkIds[chunkId]) {
-        updatedChunkIds[chunkId] = true;
+        updatedChunkIds[chunkId] = true
         VoxelComponent.updateChunkGeometry(ox, oy, oz)
       }
     }
@@ -241,43 +239,37 @@ export const VoxelComponent = defineComponent({
 
   chunkIdToEntity: {} as Record<string, Entity>,
 
-  chunks: {} as Record<string, Uint8Array>,
-
   updateChunkGeometry(x: number, y: number, z: number) {
     const chunkX = Math.floor(x / VoxelComponent.chunkSize)
     const chunkY = Math.floor(y / VoxelComponent.chunkSize)
     const chunkZ = Math.floor(z / VoxelComponent.chunkSize)
     const chunkId = VoxelComponent.computeChunkId(x, y, z)
-    let entity = VoxelComponent.chunkIdToEntity[chunkId]
-    if (!entity) {
-      const geometry = new BufferGeometry();
+    const entity = VoxelComponent.chunkIdToEntity[chunkId]
+    if (!entity) return
+    const meshComponent = getOptionalComponent(entity, MeshComponent)
+    if (!meshComponent) {
+      const geometry = new BufferGeometry()
       const positionNumComponents = 3
       const normalNumComponents = 3
       const uvNumComponents = 2
 
-      entity = createEntity()
-
-      geometry.setAttribute(
-        'position',
-        new BufferAttribute(new Float32Array(1), positionNumComponents));
-      geometry.setAttribute(
-        'normal',
-        new BufferAttribute(new Float32Array(1), normalNumComponents));
-      geometry.setAttribute(
-        'uv',
-        new BufferAttribute(new Float32Array(1), uvNumComponents));
+      geometry.setAttribute('position', new BufferAttribute(new Float32Array(1), positionNumComponents))
+      geometry.setAttribute('normal', new BufferAttribute(new Float32Array(1), normalNumComponents))
+      geometry.setAttribute('uv', new BufferAttribute(new Float32Array(1), uvNumComponents))
 
       const mesh = new Mesh(geometry, new MeshStandardMaterial())
-      ;(mesh.material as any) = new ShaderMaterial({uniforms: UniformsLib.lights, vertexShader: vertexShader, fragmentShader: fragmentShader})
+      ;(mesh.material as any) = new ShaderMaterial({
+        uniforms: UniformsLib.lights,
+        vertexShader: vertexShader,
+        fragmentShader: fragmentShader
+      })
       mesh.name = chunkId
-      VoxelComponent.chunkIdToEntity[chunkId] = entity
       setComponent(entity, MeshComponent, mesh)
-      setComponent(entity, NameComponent, 'Voxel Chunk')
       setComponent(entity, VisibleComponent, true)
       addObjectToGroup(entity, mesh)
     }
 
-    const { positions, normals, uvs, indices } = VoxelComponent.generateGeometryDataForChunk(chunkX, chunkY, chunkZ);
+    const { positions, normals, uvs, indices } = VoxelComponent.generateGeometryDataForChunk(chunkX, chunkY, chunkZ)
     const geometry = getComponent(entity, MeshComponent).geometry
     geometry.setAttribute('position', new BufferAttribute(new Float32Array(positions), 3))
     geometry.getAttribute('position').needsUpdate = true
@@ -286,14 +278,32 @@ export const VoxelComponent = defineComponent({
     geometry.setAttribute('uv', new BufferAttribute(new Float32Array(uvs), 2))
     geometry.getAttribute('uv').needsUpdate = true
     geometry.setIndex(indices)
-    setComponent(entity, RigidBodyComponent, { type: BodyTypes.Fixed})
-    if(hasComponent(entity, ColliderComponent)) removeComponent(entity, ColliderComponent)
-    setComponent(entity, ColliderComponent, {
-     shape: 'mesh', collisionLayer: CollisionGroups.Ground,
-     collisionMask: CollisionGroups.Default | CollisionGroups.Avatars
+    setComponent(entity, RigidBodyComponent, { type: BodyTypes.Fixed })
+    setComponent(entity, EntityTreeComponent, { parentEntity: Engine.instance.originEntity })
+    setComponent(entity, TransformComponent, {
+      position: new Vector3(
+        chunkX * VoxelComponent.chunkSize,
+        chunkY * VoxelComponent.chunkSize,
+        chunkZ * VoxelComponent.chunkSize
+      )
     })
-    setComponent(entity, EntityTreeComponent, {parentEntity: Engine.instance.originEntity})
-    setComponent(entity, TransformComponent, { position: new Vector3(chunkX * VoxelComponent.chunkSize, chunkY * VoxelComponent.chunkSize, chunkZ * VoxelComponent.chunkSize) })
+    if (hasComponent(entity, ColliderComponent)) removeComponent(entity, ColliderComponent)
+    setComponent(entity, ColliderComponent, {
+      shape: 'mesh',
+      collisionLayer: CollisionGroups.Ground,
+      collisionMask: CollisionGroups.Default | CollisionGroups.Avatars
+    })
+  }
+})
 
+export const VoxelChunkComponent = defineComponent({
+  name: 'VoxelChunk',
+  onInit: () => {
+    return { voxels: Uint8Array.from([]) }
   },
+
+  onSet: (entity, component, json) => {
+    if (!json) return
+    if (json.voxels) component.voxels.set(json.voxels)
+  }
 })
