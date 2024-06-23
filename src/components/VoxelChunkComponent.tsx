@@ -43,8 +43,21 @@ export const matchesVector = matches.guard((v): v is Vector => matchesVectorShap
 
 export const VoxelComponent = defineComponent({
   name: 'Voxel Manager',
-  jsonID: 'voxelManager',
-  onInit: (entity) => {},
+  jsonID: 'EC_Voxel_Manager',
+
+  onInit(entity) {
+    return {
+      worldName: 'Voxel World'
+    }
+  },
+
+  onSet(entity, component, json) {
+    if(json?.worldName) component.worldName.set(json.worldName)
+  },
+
+  toJSON(entity, component) {
+    return({worldName: component.worldName.value})
+  },
 
   chunkSize: 32,
   tileSize: 1,
@@ -138,7 +151,8 @@ export const VoxelComponent = defineComponent({
     const chunkId = VoxelComponent.computeChunkId(x, y, z)
     const chunkEntity = createEntity()
     setComponent(chunkEntity, VoxelChunkComponent, {
-      voxels: new Uint8Array(VoxelComponent.chunkSize * VoxelComponent.chunkSize * VoxelComponent.chunkSize)
+      voxels: new Uint8Array(VoxelComponent.chunkSize * VoxelComponent.chunkSize * VoxelComponent.chunkSize),
+      id: chunkId
     })
     setComponent(chunkEntity, NameComponent, 'Voxel Chunk')
     VoxelComponent.chunkIdToEntity[chunkId] = chunkEntity
@@ -148,7 +162,7 @@ export const VoxelComponent = defineComponent({
     return getOptionalComponent(
       VoxelComponent.chunkIdToEntity[VoxelComponent.computeChunkId(x, y, z)],
       VoxelChunkComponent
-    )
+    )?.voxels
   },
 
   setVoxel: (x, y, z, v) => {
@@ -299,11 +313,15 @@ export const VoxelComponent = defineComponent({
 export const VoxelChunkComponent = defineComponent({
   name: 'VoxelChunk',
   onInit: () => {
-    return { voxels: Uint8Array.from([]) }
+    return { 
+      voxels: Uint8Array.from([]),
+      id: ''
+    }
   },
 
   onSet: (entity, component, json) => {
     if (!json) return
     if (json.voxels) component.voxels.set(json.voxels)
+    if (json.id) component.id.set(json.id)
   }
 })

@@ -14,6 +14,7 @@ import { SceneQueryType } from "@etherealengine/spatial/src/physics/types/Physic
 import { Vector3 } from "three"
 import { VoxelComponent, axes } from "../components/VoxelChunkComponent"
 import { VoxelActions } from "./VoxelChunkSystem"
+import { InputComponent } from "@etherealengine/spatial/src/input/components/InputComponent"
 
 const interactionGroups = getInteractionGroups(CollisionGroups.Default, CollisionGroups.Ground)
 const raycastComponentData = {
@@ -51,7 +52,7 @@ const clickVoxel = (newVoxelId: number) => {
 }
 
 const execute = () => {
-  const buttons = InputSourceComponent.getMergedButtons()
+  const buttons = InputComponent.getMergedButtons(Engine.instance.viewerEntity)
   if (buttons.PrimaryClick?.down) clickVoxel(0)
   if (buttons.SecondaryClick?.down) clickVoxel(1)
 }
