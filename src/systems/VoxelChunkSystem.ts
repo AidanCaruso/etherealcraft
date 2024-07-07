@@ -1,13 +1,15 @@
 import { defineSystem, Entity, EntityUUID, getComponent, setComponent, SimulationSystemGroup, useQuery } from "@etherealengine/ecs"
 import {useEffect} from 'react'
 import { matchesVector, Vector, VoxelChunkComponent, VoxelComponent } from "../components/VoxelChunkComponent"
-import { defineAction, defineState, getMutableState, matches, NO_PROXY, none, useHookstate } from "@etherealengine/hyperflux"
+import { defineAction, defineState, getMutableState, getState, matches, NO_PROXY, none, useHookstate } from "@etherealengine/hyperflux"
 import { NetworkTopics } from "@etherealengine/network"
 import { uploadToFeathersService } from "@etherealengine/client-core/src/util/upload"
 import { fileBrowserUploadPath, uploadAssetPath } from "@etherealengine/common/src/schema.type.module"
 import { isClient } from "@etherealengine/common/src/utils/getEnvironment"
 import config from "@etherealengine/common/src/config"
 import {useMemo} from 'react'
+import { InputComponent } from "@etherealengine/spatial/src/input/components/InputComponent"
+import { EngineState } from "@etherealengine/spatial/src/EngineState"
 
 export const VoxelActions = {
   setVoxel: defineAction({    type: 'SetVoxel',
@@ -45,10 +47,15 @@ export const writeChunk = (entity: Entity) => {
   const blob = [chunkComponent.voxels.buffer]
   const file = new File(blob, `${chunkComponent.id}.chunk`)
   uploadToFeathersService(fileBrowserUploadPath, [file], {
-    fileName: file.name,
-    project: 'etherealcraft',
-    path: 'public/world/' + file.name,
-    contentType: file.type
+    args: [
+      {
+        fileName: file.name,
+        project: 'etherealcraft',
+        path: 'public/world/' + file.name,
+        contentType: file.type,
+        type: 'thumbnail',
+      }
+    ]
   })
 }
 
@@ -56,6 +63,7 @@ export const writeChunk = (entity: Entity) => {
 export const writeWorld = () => {
   for(const entity of Object.values(VoxelComponent.chunkIdToEntity)){
     writeChunk(entity)
+    return
   }
 }
 
@@ -78,10 +86,20 @@ export const useLoadChunk = (world: string, id: string) => {
   return chunk
 }
 
+export const useLoadWorld = (world: string) => {
+
+}
+
 export default defineSystem({
   uuid: 'VoxelChunkSystem',
   insert: { after: SimulationSystemGroup },
-
+   /**@TODO READ/WRITE TESTING ONLY
+  * Replace this with actual UI for writing chunk data on the server
+  */
+  execute: () => {
+    const buttons = InputComponent.getMergedButtons(getState(EngineState).viewerEntity)
+    if(buttons.F6) writeWorld()
+  },
   reactor: () => {
     const chunkQuery = useQuery([VoxelComponent])
     useEffect( () => {
@@ -113,14 +131,23 @@ export default defineSystem({
         }
       }
       
-      //todo this should be SERVER ONLY.
-      writeChunk(VoxelComponent.chunkIdToEntity[VoxelComponent.computeChunkId(0, 0, 0)])
     }, [chunkQuery])
 
     const chunk = useLoadChunk('world', '0,0,0')
 
     useEffect(() => {
-      console.log(chunk)
+      const {chunkSize, setVoxel } = VoxelComponent
+      console.log(chunk.value)
+      if(!chunk.value) return
+      let i = 0
+      for (let x = 0; x < chunkSize; x++) {
+        for (let y = 0; y < chunkSize; y++) {
+          for (let z = 0; z < chunkSize; z++) {
+            setVoxel(z, x, y, chunk.value[i])
+            i++
+          }
+        }
+      }
     }, [chunk])
 
     return null

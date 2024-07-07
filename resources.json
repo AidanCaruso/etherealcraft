@@ -1,1 +1,344 @@
-[{"id":"01d5e571-b572-4668-b27e-94b811898420","sid":"2qZTtZFz","hash":"e970bd7279edfeb93e16707b9aa67446bd0d817b71ac3a89ee8f30a39da99fde","url":"","key":"projects/default-project/assets/apartment_skybox.jpg","mimeType":"image/jpeg","project":"default-project","tags":["Image"],"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"0435c6aa-e7ce-4cab-b473-84aa7b7d7b12","sid":"yKHf1sGw","hash":"cfe3862db9006f7cbeb26617049fdab1326b99d72be14431a3a2da446ba35322","url":"","key":"/projects/default-project/assets/avatars/male_01.png","mimeType":"image/png","project":"default-project","stats":{"width":256,"height":256},"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"0ad393bc-7a7c-4188-86b4-7056faa932f2","sid":"u_GtuNGt","hash":"d9bf9c741461d9d46f553847a1d2ee5898f4a2f86c47c8f6869d608458454e84","url":"","key":"projects/default-project/assets/drop-shadow.png","mimeType":"image/png","project":"default-project","tags":["Image"],"createdAt":"2024-02-03T00:26:26.000Z","updatedAt":"2024-02-03T00:26:26.000Z"},{"id":"0c51efd1-46a1-44b0-afe8-143ffb08f8e8","sid":"xQUAhwoJ","hash":"be5e0a35efbf60d595e344396af2088cd4459bf9954934e20e90dcd3c37b0105","url":"","key":"projects/default-project/assets/avatars/female_03.vrm","mimeType":"application/octet-stream","project":"default-project","tags":["Model"],"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"142777bb-b580-4831-9805-eb285c3d378b","sid":"53cBvdNw","hash":"27dd1b9a9ca8ffbfb7e0ca73bdf0b09b6bf910c95da1f7396d3d20355191a192","url":"","key":"projects/default-project/assets/keycard.glb","mimeType":"model/gltf-binary","project":"default-project","tags":["Model"],"createdAt":"2024-02-03T00:26:26.000Z","updatedAt":"2024-02-03T00:26:26.000Z"},{"id":"17d401fd-9b3a-4f47-9d67-c3d0b97ae38a","sid":"mTiWIyKy","hash":"a3946380127f4a57ef55837e7213e9bac504664e34244d78bd78ab3cd3efde1b","url":"","key":"projects/default-project/assets/controllers/left.glb","mimeType":"model/gltf-binary","project":"default-project","tags":["Model"],"createdAt":"2024-02-03T00:26:26.000Z","updatedAt":"2024-02-03T00:26:26.000Z"},{"id":"19a3ef5e-39d7-48d5-8411-426de850af6b","sid":"LD_GboUL","hash":"0ae3d0eabfbd5184e96e4ffac0b22d7cbfe09a16ba81a0923b1118ad213a1ff4","url":"","key":"projects/default-project/assets/skyboxsun25deg/posx.jpg","mimeType":"image/jpeg","project":"default-project","tags":["Image"],"createdAt":"2024-02-03T00:26:26.000Z","updatedAt":"2024-02-03T00:26:26.000Z"},{"id":"1b0ecc3c-3f39-423b-b5bd-e809407bb494","sid":"MVw0dC60","hash":"9af1be18eb50ed19cc2aa5cd8ad5be2a865c02f5aa4152ef5825251d70178e83","url":"","key":"/projects/default-project/assets/avatars/female_02.vrm","mimeType":"model/vrm","project":"default-project","stats":{},"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"1e58fbcb-306d-402a-b08e-86ac93f615b8","sid":"96PsXKId","hash":"485495746ebd2c590951f208ff3719d3ceb9ce8473a6580012b741ae1317562d","url":"","key":"/projects/default-project/assets/avatars/female_01.png","mimeType":"image/png","project":"default-project","stats":{"width":256,"height":256},"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"288a3248-d746-4fa0-ae8d-3f0fdc8a7977","sid":"f5QvH12B","hash":"0c7fad3853635ce8a83aa8174956a4e276d031e9ed350ee177971764649c8edb","url":"","key":"projects/default-project/assets/avatars/male_02.vrm","mimeType":"application/octet-stream","project":"default-project","tags":["Model"],"createdAt":"2024-02-03T00:26:26.000Z","updatedAt":"2024-02-03T00:26:26.000Z"},{"id":"2de6fb1f-9f79-4cf8-bd14-a9b75d271cb4","sid":"U_5dKaHc","hash":"f819034ba40642ed25ed8af45e3806a39b766f9da5f1b989870b3c7b7c771797","url":"","key":"projects/default-project/assets/animations/locomotion.glb","mimeType":"model/gltf-binary","project":"default-project","tags":["Model"],"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"31e7e71a-8e8e-4bec-9e25-401949bb71b2","sid":"SW-eplJV","hash":"8c45dafd120026b58f59bc3418285366d9e82135b13a8cbf04893e9aa086452a","url":"","key":"projects/default-project/assets/avatars/male_03.vrm","mimeType":"application/octet-stream","project":"default-project","tags":["Model"],"createdAt":"2024-02-03T00:26:26.000Z","updatedAt":"2024-02-03T00:26:26.000Z"},{"id":"3771d7da-fa50-4d91-87da-36ac2a284375","sid":"grQ0M40C","hash":"317d06b40fe1755a1294d985980fc4af6d78f8ed337b9242ea73782889f44022","url":"","key":"projects/default-project/assets/apartment.glb","mimeType":"model/gltf-binary","project":"default-project","tags":["Model"],"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"3e168fe1-0092-41f8-bf28-39e8f9fb896d","sid":"92XW3mlU","hash":"4f939f2e79dab342fa25b3c55a6321a6e70f5d78966981cc01fa93ce520a0d33","url":"","key":"projects/default-project/assets/skyboxsun25deg/negz.jpg","mimeType":"image/jpeg","project":"default-project","tags":["Image"],"createdAt":"2024-02-03T00:26:26.000Z","updatedAt":"2024-02-03T00:26:26.000Z"},{"id":"4020096c-39f8-44db-8ae4-d08eb3fcbf0b","sid":"7SYIC7ag","hash":"c5e4a3d8b4c2080e364cf2fe9d8bf5d130a805d23753f11fbdab5b45619dcb4d","url":"","key":"projects/default-project/assets/collisioncube.glb","mimeType":"model/gltf-binary","project":"default-project","tags":["Model"],"createdAt":"2024-02-03T00:26:26.000Z","updatedAt":"2024-02-03T00:26:26.000Z"},{"id":"41372f78-ac3b-4e3b-ad3e-4958cdf2f59f","sid":"S8_y1lx1","hash":"0f86dcec34e92b5504a885ae2333a953165ed84767be8ad972c987440f0b3a5b","url":"","key":"projects/default-project/assets/avatars/male_02.png","mimeType":"image/png","project":"default-project","tags":["Image"],"createdAt":"2024-02-03T00:26:26.000Z","updatedAt":"2024-02-03T00:26:26.000Z"},{"id":"46cc3cd3-d5fe-451b-bcd9-c883c6045c9c","sid":"420oHDHi","hash":"aad02ca5882f10760aa23a5de24cc96b9d966d68904234c0d6838b7b20bba1df","url":"","key":"projects/default-project/assets/SampleAudio.mp3","mimeType":"audio/mpeg","project":"default-project","tags":["Audio"],"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"4c2a5e2a-e25b-4fa6-bfe6-802374457000","sid":"IxroDixq","hash":"a5a3baa5330d71fc3a942b55e611c70c170163665683a97622bcf2c5204ba538","url":"","key":"projects/default-project/assets/skyboxsun25deg/negx.jpg","mimeType":"image/jpeg","project":"default-project","tags":["Image"],"createdAt":"2024-02-03T00:26:26.000Z","updatedAt":"2024-02-03T00:26:26.000Z"},{"id":"4db0cca1-7e2c-4429-a7a2-4543e450f6a5","sid":"M0mb3cps","hash":"781ebf1d3a86cbbf5437b3b65f04f56c620d755edfb3aff90afdc6cb802b29cc","url":"","key":"projects/default-project/assets/Skybase.glb","mimeType":"model/gltf-binary","project":"default-project","tags":["Model"],"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"592c705b-9081-43f7-bdc0-9ab9fab70ca3","sid":"wtFf_4xq","hash":"1ee9cfd70dfd354914ff5312c7247573c2dd46271aa64dc1c2423359bbc3d0cc","url":"","key":"/projects/default-project/assets/avatars/female_03.vrm","mimeType":"model/vrm","project":"default-project","stats":{},"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"5c087249-58c6-4c24-8117-ba7fbed2a93c","sid":"kJUK22IP","hash":"cfe3862db9006f7cbeb26617049fdab1326b99d72be14431a3a2da446ba35322","url":"","key":"projects/default-project/assets/avatars/male_01.png","mimeType":"image/png","project":"default-project","tags":["Image"],"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"6a429946-0f11-4bbb-9934-612a7a3359fd","sid":"JivSUrEW","hash":"3fbdf0144c11590a71a49ab70e5f68af1dea936a49eb6c936624b1a1d58ee33a","url":"","key":"/projects/default-project/assets/avatars/male_03.vrm","mimeType":"model/vrm","project":"default-project","stats":{},"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"74cf7bfc-be19-4aa1-b1b4-e78e3cbe6644","sid":"ec-N3WSm","hash":"f72c2371757eecde675e2176c6d083668a2192f9e57b120bf20acd7607564e90","url":"","key":"projects/default-project/assets/sample_etc1s.ktx2","mimeType":"image/ktx2","project":"default-project","tags":["Image"],"createdAt":"2024-02-03T00:26:26.000Z","updatedAt":"2024-02-03T00:26:26.000Z"},{"id":"7b3db2f4-f144-47e1-a733-5886e92f01a1","sid":"t_zLHj9N","hash":"b3e863a32327735d514af61f55d8a331d0be781cb50129761ba2a5a235176279","url":"","key":"projects/default-project/assets/sky_skybox.jpg","mimeType":"image/jpeg","project":"default-project","tags":["Image"],"createdAt":"2024-02-03T00:26:26.000Z","updatedAt":"2024-02-03T00:26:26.000Z"},{"id":"7bbf293e-02fb-4e55-93b0-539defcd4bb6","sid":"kjonicjS","hash":"4e234b19f75da82b60794a43a1345f4e9a856dc1f12959093480855dd530f2e6","url":"","key":"/projects/default-project/assets/avatars/female_01.vrm","mimeType":"model/vrm","project":"default-project","stats":{},"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"7ebb943f-8c26-4fe7-9184-032d41cdcbc5","sid":"3SPb-e9L","hash":"20a2ec6b65d8ac940f6d2c1b17dcd2be126a615ac025583668ac53db8a7085eb","url":"","key":"projects/default-project/assets/controllers/left_controller.glb","mimeType":"model/gltf-binary","project":"default-project","tags":["Model"],"createdAt":"2024-02-03T00:26:26.000Z","updatedAt":"2024-02-03T00:26:26.000Z"},{"id":"89e3b999-bf06-460c-831f-1cdfab6c3a9e","sid":"9YAc0e7j","hash":"d1154356e2909638d55bed15f65b98d284ad86e57af63014be4b3cc0cfd14e03","url":"","key":"projects/default-project/assets/apartment-CubemapBake.png","mimeType":"image/png","project":"default-project","tags":["Image"],"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"8e015983-7a84-49b9-8258-26a057c19b21","sid":"7apEqHsl","hash":"3794f749477fc7f82654b960eb9c0cb66b5df34163749a571c1e86923a34adc2","url":"","key":"projects/default-project/assets/avatars/female_02.vrm","mimeType":"application/octet-stream","project":"default-project","tags":["Model"],"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"8fc0fe6d-ef24-4d6e-80f3-90917bd665a3","sid":"l7C1BJl8","hash":"3484ac1feef09a2866281fb7e78e833e184e2e32cd5a8c547d4e7722df983774","url":"","key":"projects/default-project/assets/avatars/male_01.vrm","mimeType":"application/octet-stream","project":"default-project","tags":["Model"],"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"a269a46e-7fd4-4291-9285-0664d4c0655e","sid":"sgaqq11B","hash":"5dd0490efd5f2d0571f416f30470354683ce7750970fe417ef6badfad88b2c77","url":"","key":"projects/default-project/assets/UV.png","mimeType":"image/png","project":"default-project","tags":["Image"],"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"b273ddf7-a106-4894-b2a4-d13acb915592","sid":"Q2io5w6L","hash":"2935ea873277f1293dbb5d15a007ed482e3b94570cd5540efb974a62583cc823","url":"","key":"projects/default-project/assets/avatars/male_03.png","mimeType":"image/png","project":"default-project","tags":["Image"],"createdAt":"2024-02-03T00:26:26.000Z","updatedAt":"2024-02-03T00:26:26.000Z"},{"id":"b450329b-bbe4-470d-bb8b-d1eaee7c7bd6","sid":"3LA3Nxot","hash":"7f2a9fbb19483c9aec4bdfa392c0894d0f71f606781d9f4786f9c1ea5cce0566","url":"","key":"projects/default-project/assets/galaxyTexture.jpg","mimeType":"image/jpeg","project":"default-project","tags":["Image"],"createdAt":"2024-02-03T00:26:26.000Z","updatedAt":"2024-02-03T00:26:26.000Z"},{"id":"b452e155-1e6d-4a5a-a4f2-6ff8846371a9","sid":"Lg32oGbL","hash":"cc020c1eb2323dfefb659cfd0ff8fcfdd223415239830c6d2b56662eb3a7bd2b","url":"","key":"projects/default-project/assets/avatars/female_01.vrm","mimeType":"application/octet-stream","project":"default-project","tags":["Model"],"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"b6da34dc-e50b-48d7-8407-d9573c4bafd9","sid":"U_MRVTJU","hash":"485495746ebd2c590951f208ff3719d3ceb9ce8473a6580012b741ae1317562d","url":"","key":"projects/default-project/assets/avatars/female_01.png","mimeType":"image/png","project":"default-project","tags":["Image"],"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"b70bfcc6-a744-4dad-893c-72033fcee12f","sid":"DqtSPP5g","hash":"147d99f305d17e3d51df44af9fc818aa05564dca23266a83f141853d3bb79ff3","url":"","key":"/projects/default-project/assets/avatars/male_02.vrm","mimeType":"model/vrm","project":"default-project","stats":{},"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"c2790949-9145-4f37-b157-e06a61f92426","sid":"zUI-QqKu","hash":"4c91240a3dcaefd40e24f5eb1fd13c0b864ce656cd0aabc2ce20b18176affe8c","url":"","key":"projects/default-project/assets/skyboxsun25deg/posz.jpg","mimeType":"image/jpeg","project":"default-project","tags":["Image"],"createdAt":"2024-02-03T00:26:26.000Z","updatedAt":"2024-02-03T00:26:26.000Z"},{"id":"c4a14ad3-9e96-45e0-8ae2-a53b011c8733","sid":"7QHg23Ud","hash":"db4927343f86aac9d2c939c6a0e3bea77cbccabe358fe9f13388c376cdf3c99c","url":"","key":"projects/default-project/assets/avatars/female_02.png","mimeType":"image/png","project":"default-project","tags":["Image"],"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"c6b2ff44-c221-4dac-a1de-9040e55d6dab","sid":"AzYhqNTv","hash":"80d0eafe048ae7138af4efed3706f4391f025b8f33c3900d17e0a86597d5a77f","url":"","key":"/projects/default-project/assets/avatars/male_01.vrm","mimeType":"model/vrm","project":"default-project","stats":{},"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"c94b9d74-19ff-42a0-a13e-0dc86c13295a","sid":"dQiJJ3HZ","hash":"9935dfeadbf3aa89257abb318e569d2fe681f652d976aba5baae865afd49a5be","url":"","key":"projects/default-project/assets/animations/emotes.glb","mimeType":"model/gltf-binary","project":"default-project","tags":["Model"],"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"cc954103-b753-4d02-936b-27a39e2ada8f","sid":"KvHHc-Wc","hash":"e92d4c5a973dbf8f84c46baf173eff9785c21d5424319193a9d19fef23dd8318","url":"","key":"projects/default-project/assets/controllers/right_controller.glb","mimeType":"model/gltf-binary","project":"default-project","tags":["Model"],"createdAt":"2024-02-03T00:26:26.000Z","updatedAt":"2024-02-03T00:26:26.000Z"},{"id":"cd3fb939-708c-4d83-8e2c-1bbbfe980f72","sid":"aV-oINBX","hash":"85565a3188865e51c0237d963fde3944e7dae6f029f46e78034f6f15f483b71b","url":"","key":"projects/default-project/assets/SampleVideo.mp4","mimeType":"video/mp4","project":"default-project","tags":["Video"],"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"cdde15a2-b28e-4131-9e9b-378cae8af0c1","sid":"PsJPsBzX","hash":"3330bca720db4648aad7f84a1eebb87d131e3f7ba5d86a5e11690d0a1b502284","url":"","key":"projects/default-project/assets/animations/default_skeleton.vrm","mimeType":"application/octet-stream","project":"default-project","tags":["Model"],"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"d4b50aa6-38e3-4cdd-b739-0139b9351a3f","sid":"wfV9bjZa","hash":"b9bf6d10d2838ce84cfcc7334f5b16c07af08f0918b8390d1bd9e2af4039ebef","url":"","key":"projects/default-project/assets/avatars/female_03.png","mimeType":"image/png","project":"default-project","tags":["Image"],"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"d899bd19-aa7b-4fab-a216-eb403fe52c90","sid":"jXVWU8ef","hash":"8996a9cbb566a541d267a1de89219f869de16a353705503d0a472d980d1bf450","url":"","key":"projects/default-project/assets/controllers/right.glb","mimeType":"model/gltf-binary","project":"default-project","tags":["Model"],"createdAt":"2024-02-03T00:26:26.000Z","updatedAt":"2024-02-03T00:26:26.000Z"},{"id":"dd0a98e8-b7cf-4f8a-bdae-bb8e5d0f8a8f","sid":"0ITfExHH","hash":"db4927343f86aac9d2c939c6a0e3bea77cbccabe358fe9f13388c376cdf3c99c","url":"","key":"/projects/default-project/assets/avatars/female_02.png","mimeType":"image/png","project":"default-project","stats":{"width":256,"height":256},"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"df51d707-c844-45e6-abf9-e2dbc9b60c1c","sid":"CbLBoIgw","hash":"b9bf6d10d2838ce84cfcc7334f5b16c07af08f0918b8390d1bd9e2af4039ebef","url":"","key":"/projects/default-project/assets/avatars/female_03.png","mimeType":"image/png","project":"default-project","stats":{"width":256,"height":256},"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"df99624f-0b1b-4dbf-8f5c-dac3086d21be","sid":"nppWIpl2","hash":"0f86dcec34e92b5504a885ae2333a953165ed84767be8ad972c987440f0b3a5b","url":"","key":"/projects/default-project/assets/avatars/male_02.png","mimeType":"image/png","project":"default-project","stats":{"width":256,"height":256},"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"e1793bc2-15f7-403a-a6b5-aacc63933175","sid":"GU6Usv8U","hash":"b05e8b1623195ef9144799e9563465beb765fc89bb34cdfe545e052e2966d046","url":"","key":"projects/default-project/assets/animations/optional/seated.fbx","mimeType":"application/octet-stream","project":"default-project","tags":["Model"],"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"e2e16200-874a-4c98-aea5-ad865ed2a1f0","sid":"tsJzilhE","hash":"fc8ef166f68e25c1f930a7681c29e96722c1d61ae14c81fdf4b77701048ba8cf","url":"","key":"projects/default-project/assets/test-equippable.glb","mimeType":"model/gltf-binary","project":"default-project","tags":["Model"],"createdAt":"2024-02-03T00:26:26.000Z","updatedAt":"2024-02-03T00:26:26.000Z"},{"id":"e56546b0-cc89-46ff-86e2-e8f34648a7af","sid":"D5UirYKw","hash":"348731124c1dda949836db3a683d37f80886ea96d00a99bdd75dc468c509e869","url":"","key":"projects/default-project/assets/portal_frame.glb","mimeType":"model/gltf-binary","project":"default-project","tags":["Model"],"createdAt":"2024-02-03T00:26:26.000Z","updatedAt":"2024-02-03T00:26:26.000Z"},{"id":"e570c019-0a78-4961-871f-4114db745064","sid":"M0D1neRW","hash":"4f0c2a83e55eb8539fee40be760cc53992dbb6f9a328db69448ddb0fc5416493","url":"","key":"projects/default-project/assets/skyboxsun25deg/negy.jpg","mimeType":"image/jpeg","project":"default-project","tags":["Image"],"createdAt":"2024-02-03T00:26:26.000Z","updatedAt":"2024-02-03T00:26:26.000Z"},{"id":"e8346742-df29-48ce-8239-1a6c41e4cdf5","sid":"LWqgAYb9","hash":"2935ea873277f1293dbb5d15a007ed482e3b94570cd5540efb974a62583cc823","url":"","key":"/projects/default-project/assets/avatars/male_03.png","mimeType":"image/png","project":"default-project","stats":{"width":256,"height":256},"createdAt":"2024-02-03T00:26:25.000Z","updatedAt":"2024-02-03T00:26:25.000Z"},{"id":"f61ca52c-ecd4-4406-91ed-9759993585e2","sid":"0_U75xP9","hash":"61056f97a5123951d48616d85d7691341153d0d57e199a29e5bdb4649e62361b","url":"","key":"projects/default-project/assets/cloud.png","mimeType":"image/png","project":"default-project","tags":["Image"],"createdAt":"2024-02-03T00:26:26.000Z","updatedAt":"2024-02-03T00:26:26.000Z"},{"id":"fb55bd33-eb38-4dbe-8e42-ad693a868e99","sid":"U7Otluik","hash":"258e17d68f8de2634811bec66c10dda9165676b14026ec2679759fe1779e8f55","url":"","key":"projects/default-project/assets/skyboxsun25deg/posy.jpg","mimeType":"image/jpeg","project":"default-project","tags":["Image"],"createdAt":"2024-02-03T00:26:26.000Z","updatedAt":"2024-02-03T00:26:26.000Z"}]
+{
+  "projects/default-project/assets/apartment_skybox.jpg": {
+    "hash": "e970bd7279edfeb93e16707b9aa67446bd0d817b71ac3a89ee8f30a39da99fde",
+    "type": "file",
+    "tags": [
+      "Image"
+    ]
+  },
+  "/projects/default-project/assets/avatars/male_01.png": {
+    "hash": "cfe3862db9006f7cbeb26617049fdab1326b99d72be14431a3a2da446ba35322",
+    "type": "file"
+  },
+  "projects/default-project/assets/drop-shadow.png": {
+    "hash": "d9bf9c741461d9d46f553847a1d2ee5898f4a2f86c47c8f6869d608458454e84",
+    "type": "file",
+    "tags": [
+      "Image"
+    ]
+  },
+  "projects/default-project/assets/avatars/female_03.vrm": {
+    "hash": "be5e0a35efbf60d595e344396af2088cd4459bf9954934e20e90dcd3c37b0105",
+    "type": "file",
+    "tags": [
+      "Model"
+    ]
+  },
+  "projects/default-project/assets/keycard.glb": {
+    "hash": "27dd1b9a9ca8ffbfb7e0ca73bdf0b09b6bf910c95da1f7396d3d20355191a192",
+    "type": "file",
+    "tags": [
+      "Model"
+    ]
+  },
+  "projects/default-project/assets/controllers/left.glb": {
+    "hash": "a3946380127f4a57ef55837e7213e9bac504664e34244d78bd78ab3cd3efde1b",
+    "type": "file",
+    "tags": [
+      "Model"
+    ]
+  },
+  "projects/default-project/assets/skyboxsun25deg/posx.jpg": {
+    "hash": "0ae3d0eabfbd5184e96e4ffac0b22d7cbfe09a16ba81a0923b1118ad213a1ff4",
+    "type": "file",
+    "tags": [
+      "Image"
+    ]
+  },
+  "/projects/default-project/assets/avatars/female_02.vrm": {
+    "hash": "9af1be18eb50ed19cc2aa5cd8ad5be2a865c02f5aa4152ef5825251d70178e83",
+    "type": "file"
+  },
+  "/projects/default-project/assets/avatars/female_01.png": {
+    "hash": "485495746ebd2c590951f208ff3719d3ceb9ce8473a6580012b741ae1317562d",
+    "type": "file"
+  },
+  "projects/default-project/assets/avatars/male_02.vrm": {
+    "hash": "0c7fad3853635ce8a83aa8174956a4e276d031e9ed350ee177971764649c8edb",
+    "type": "file",
+    "tags": [
+      "Model"
+    ]
+  },
+  "projects/default-project/assets/animations/locomotion.glb": {
+    "hash": "f819034ba40642ed25ed8af45e3806a39b766f9da5f1b989870b3c7b7c771797",
+    "type": "file",
+    "tags": [
+      "Model"
+    ]
+  },
+  "projects/default-project/assets/avatars/male_03.vrm": {
+    "hash": "8c45dafd120026b58f59bc3418285366d9e82135b13a8cbf04893e9aa086452a",
+    "type": "file",
+    "tags": [
+      "Model"
+    ]
+  },
+  "projects/default-project/assets/apartment.glb": {
+    "hash": "317d06b40fe1755a1294d985980fc4af6d78f8ed337b9242ea73782889f44022",
+    "type": "file",
+    "tags": [
+      "Model"
+    ]
+  },
+  "projects/default-project/assets/skyboxsun25deg/negz.jpg": {
+    "hash": "4f939f2e79dab342fa25b3c55a6321a6e70f5d78966981cc01fa93ce520a0d33",
+    "type": "file",
+    "tags": [
+      "Image"
+    ]
+  },
+  "projects/default-project/assets/collisioncube.glb": {
+    "hash": "c5e4a3d8b4c2080e364cf2fe9d8bf5d130a805d23753f11fbdab5b45619dcb4d",
+    "type": "file",
+    "tags": [
+      "Model"
+    ]
+  },
+  "projects/default-project/assets/avatars/male_02.png": {
+    "hash": "0f86dcec34e92b5504a885ae2333a953165ed84767be8ad972c987440f0b3a5b",
+    "type": "file",
+    "tags": [
+      "Image"
+    ]
+  },
+  "projects/default-project/assets/SampleAudio.mp3": {
+    "hash": "aad02ca5882f10760aa23a5de24cc96b9d966d68904234c0d6838b7b20bba1df",
+    "type": "file",
+    "tags": [
+      "Audio"
+    ]
+  },
+  "projects/default-project/assets/skyboxsun25deg/negx.jpg": {
+    "hash": "a5a3baa5330d71fc3a942b55e611c70c170163665683a97622bcf2c5204ba538",
+    "type": "file",
+    "tags": [
+      "Image"
+    ]
+  },
+  "projects/default-project/assets/Skybase.glb": {
+    "hash": "781ebf1d3a86cbbf5437b3b65f04f56c620d755edfb3aff90afdc6cb802b29cc",
+    "type": "file",
+    "tags": [
+      "Model"
+    ]
+  },
+  "/projects/default-project/assets/avatars/female_03.vrm": {
+    "hash": "1ee9cfd70dfd354914ff5312c7247573c2dd46271aa64dc1c2423359bbc3d0cc",
+    "type": "file"
+  },
+  "projects/default-project/assets/avatars/male_01.png": {
+    "hash": "cfe3862db9006f7cbeb26617049fdab1326b99d72be14431a3a2da446ba35322",
+    "type": "file",
+    "tags": [
+      "Image"
+    ]
+  },
+  "/projects/default-project/assets/avatars/male_03.vrm": {
+    "hash": "3fbdf0144c11590a71a49ab70e5f68af1dea936a49eb6c936624b1a1d58ee33a",
+    "type": "file"
+  },
+  "projects/default-project/assets/sample_etc1s.ktx2": {
+    "hash": "f72c2371757eecde675e2176c6d083668a2192f9e57b120bf20acd7607564e90",
+    "type": "file",
+    "tags": [
+      "Image"
+    ]
+  },
+  "projects/default-project/assets/sky_skybox.jpg": {
+    "hash": "b3e863a32327735d514af61f55d8a331d0be781cb50129761ba2a5a235176279",
+    "type": "file",
+    "tags": [
+      "Image"
+    ]
+  },
+  "/projects/default-project/assets/avatars/female_01.vrm": {
+    "hash": "4e234b19f75da82b60794a43a1345f4e9a856dc1f12959093480855dd530f2e6",
+    "type": "file"
+  },
+  "projects/default-project/assets/controllers/left_controller.glb": {
+    "hash": "20a2ec6b65d8ac940f6d2c1b17dcd2be126a615ac025583668ac53db8a7085eb",
+    "type": "file",
+    "tags": [
+      "Model"
+    ]
+  },
+  "projects/default-project/assets/apartment-CubemapBake.png": {
+    "hash": "d1154356e2909638d55bed15f65b98d284ad86e57af63014be4b3cc0cfd14e03",
+    "type": "file",
+    "tags": [
+      "Image"
+    ]
+  },
+  "projects/default-project/assets/avatars/female_02.vrm": {
+    "hash": "3794f749477fc7f82654b960eb9c0cb66b5df34163749a571c1e86923a34adc2",
+    "type": "file",
+    "tags": [
+      "Model"
+    ]
+  },
+  "projects/default-project/assets/avatars/male_01.vrm": {
+    "hash": "3484ac1feef09a2866281fb7e78e833e184e2e32cd5a8c547d4e7722df983774",
+    "type": "file",
+    "tags": [
+      "Model"
+    ]
+  },
+  "projects/default-project/assets/UV.png": {
+    "hash": "5dd0490efd5f2d0571f416f30470354683ce7750970fe417ef6badfad88b2c77",
+    "type": "file",
+    "tags": [
+      "Image"
+    ]
+  },
+  "projects/default-project/assets/avatars/male_03.png": {
+    "hash": "2935ea873277f1293dbb5d15a007ed482e3b94570cd5540efb974a62583cc823",
+    "type": "file",
+    "tags": [
+      "Image"
+    ]
+  },
+  "projects/default-project/assets/galaxyTexture.jpg": {
+    "hash": "7f2a9fbb19483c9aec4bdfa392c0894d0f71f606781d9f4786f9c1ea5cce0566",
+    "type": "file",
+    "tags": [
+      "Image"
+    ]
+  },
+  "projects/default-project/assets/avatars/female_01.vrm": {
+    "hash": "cc020c1eb2323dfefb659cfd0ff8fcfdd223415239830c6d2b56662eb3a7bd2b",
+    "type": "file",
+    "tags": [
+      "Model"
+    ]
+  },
+  "projects/default-project/assets/avatars/female_01.png": {
+    "hash": "485495746ebd2c590951f208ff3719d3ceb9ce8473a6580012b741ae1317562d",
+    "type": "file",
+    "tags": [
+      "Image"
+    ]
+  },
+  "/projects/default-project/assets/avatars/male_02.vrm": {
+    "hash": "147d99f305d17e3d51df44af9fc818aa05564dca23266a83f141853d3bb79ff3",
+    "type": "file"
+  },
+  "projects/default-project/assets/skyboxsun25deg/posz.jpg": {
+    "hash": "4c91240a3dcaefd40e24f5eb1fd13c0b864ce656cd0aabc2ce20b18176affe8c",
+    "type": "file",
+    "tags": [
+      "Image"
+    ]
+  },
+  "projects/default-project/assets/avatars/female_02.png": {
+    "hash": "db4927343f86aac9d2c939c6a0e3bea77cbccabe358fe9f13388c376cdf3c99c",
+    "type": "file",
+    "tags": [
+      "Image"
+    ]
+  },
+  "/projects/default-project/assets/avatars/male_01.vrm": {
+    "hash": "80d0eafe048ae7138af4efed3706f4391f025b8f33c3900d17e0a86597d5a77f",
+    "type": "file"
+  },
+  "projects/default-project/assets/animations/emotes.glb": {
+    "hash": "9935dfeadbf3aa89257abb318e569d2fe681f652d976aba5baae865afd49a5be",
+    "type": "file",
+    "tags": [
+      "Model"
+    ]
+  },
+  "projects/default-project/assets/controllers/right_controller.glb": {
+    "hash": "e92d4c5a973dbf8f84c46baf173eff9785c21d5424319193a9d19fef23dd8318",
+    "type": "file",
+    "tags": [
+      "Model"
+    ]
+  },
+  "projects/default-project/assets/SampleVideo.mp4": {
+    "hash": "85565a3188865e51c0237d963fde3944e7dae6f029f46e78034f6f15f483b71b",
+    "type": "file",
+    "tags": [
+      "Video"
+    ]
+  },
+  "projects/default-project/assets/animations/default_skeleton.vrm": {
+    "hash": "3330bca720db4648aad7f84a1eebb87d131e3f7ba5d86a5e11690d0a1b502284",
+    "type": "file",
+    "tags": [
+      "Model"
+    ]
+  },
+  "projects/default-project/assets/avatars/female_03.png": {
+    "hash": "b9bf6d10d2838ce84cfcc7334f5b16c07af08f0918b8390d1bd9e2af4039ebef",
+    "type": "file",
+    "tags": [
+      "Image"
+    ]
+  },
+  "projects/default-project/assets/controllers/right.glb": {
+    "hash": "8996a9cbb566a541d267a1de89219f869de16a353705503d0a472d980d1bf450",
+    "type": "file",
+    "tags": [
+      "Model"
+    ]
+  },
+  "/projects/default-project/assets/avatars/female_02.png": {
+    "hash": "db4927343f86aac9d2c939c6a0e3bea77cbccabe358fe9f13388c376cdf3c99c",
+    "type": "file"
+  },
+  "/projects/default-project/assets/avatars/female_03.png": {
+    "hash": "b9bf6d10d2838ce84cfcc7334f5b16c07af08f0918b8390d1bd9e2af4039ebef",
+    "type": "file"
+  },
+  "/projects/default-project/assets/avatars/male_02.png": {
+    "hash": "0f86dcec34e92b5504a885ae2333a953165ed84767be8ad972c987440f0b3a5b",
+    "type": "file"
+  },
+  "projects/default-project/assets/animations/optional/seated.fbx": {
+    "hash": "b05e8b1623195ef9144799e9563465beb765fc89bb34cdfe545e052e2966d046",
+    "type": "file",
+    "tags": [
+      "Model"
+    ]
+  },
+  "projects/default-project/assets/test-equippable.glb": {
+    "hash": "fc8ef166f68e25c1f930a7681c29e96722c1d61ae14c81fdf4b77701048ba8cf",
+    "type": "file",
+    "tags": [
+      "Model"
+    ]
+  },
+  "projects/default-project/assets/portal_frame.glb": {
+    "hash": "348731124c1dda949836db3a683d37f80886ea96d00a99bdd75dc468c509e869",
+    "type": "file",
+    "tags": [
+      "Model"
+    ]
+  },
+  "projects/default-project/assets/skyboxsun25deg/negy.jpg": {
+    "hash": "4f0c2a83e55eb8539fee40be760cc53992dbb6f9a328db69448ddb0fc5416493",
+    "type": "file",
+    "tags": [
+      "Image"
+    ]
+  },
+  "/projects/default-project/assets/avatars/male_03.png": {
+    "hash": "2935ea873277f1293dbb5d15a007ed482e3b94570cd5540efb974a62583cc823",
+    "type": "file"
+  },
+  "projects/default-project/assets/cloud.png": {
+    "hash": "61056f97a5123951d48616d85d7691341153d0d57e199a29e5bdb4649e62361b",
+    "type": "file",
+    "tags": [
+      "Image"
+    ]
+  },
+  "projects/default-project/assets/skyboxsun25deg/posy.jpg": {
+    "hash": "258e17d68f8de2634811bec66c10dda9165676b14026ec2679759fe1779e8f55",
+    "type": "file",
+    "tags": [
+      "Image"
+    ]
+  }
+}

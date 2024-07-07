@@ -15,6 +15,7 @@ import { Vector3 } from "three"
 import { VoxelComponent, axes } from "../components/VoxelChunkComponent"
 import { VoxelActions } from "./VoxelChunkSystem"
 import { InputComponent } from "@etherealengine/spatial/src/input/components/InputComponent"
+import { EngineState } from "@etherealengine/spatial/src/EngineState"
 
 const interactionGroups = getInteractionGroups(CollisionGroups.Default, CollisionGroups.Ground)
 const raycastComponentData = {
@@ -27,11 +28,11 @@ const raycastComponentData = {
 
 const clickVoxel = (newVoxelId: number) => {
   const { physicsWorld } = getState(PhysicsState)
-  const inputPointerEntity = InputPointerComponent.getPointerForCanvas(Engine.instance.viewerEntity)
+  const inputPointerEntity = InputPointerComponent.getPointersForCamera(getState(EngineState).viewerEntity)
   if (!inputPointerEntity) return
-  const pointerPosition = getComponent(inputPointerEntity, InputPointerComponent).position
+  const pointerPosition = getComponent(inputPointerEntity[0], InputPointerComponent).position
   const hits = Physics.castRayFromCamera(
-    getComponent(Engine.instance.viewerEntity, CameraComponent),
+    getComponent(getState(EngineState).viewerEntity, CameraComponent),
     pointerPosition,
     physicsWorld,
     raycastComponentData
@@ -52,7 +53,7 @@ const clickVoxel = (newVoxelId: number) => {
 }
 
 const execute = () => {
-  const buttons = InputComponent.getMergedButtons(Engine.instance.viewerEntity)
+  const buttons = InputComponent.getMergedButtons(getState(EngineState).viewerEntity)
   if (buttons.PrimaryClick?.down) clickVoxel(0)
   if (buttons.SecondaryClick?.down) clickVoxel(1)
 }
