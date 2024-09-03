@@ -1,15 +1,14 @@
-import { defineSystem, Entity, EntityUUID, getComponent, setComponent, SimulationSystemGroup, useQuery } from "@etherealengine/ecs"
+import { defineSystem, Entity, EntityUUID, getComponent, setComponent, SimulationSystemGroup, useQuery } from "@ir-engine/ecs"
 import {useEffect} from 'react'
 import { matchesVector, Vector, VoxelChunkComponent, VoxelComponent } from "../components/VoxelChunkComponent"
-import { defineAction, defineState, getMutableState, getState, matches, NO_PROXY, none, useHookstate } from "@etherealengine/hyperflux"
-import { NetworkTopics } from "@etherealengine/network"
-import { uploadToFeathersService } from "@etherealengine/client-core/src/util/upload"
-import { fileBrowserUploadPath, uploadAssetPath } from "@etherealengine/common/src/schema.type.module"
-import { isClient } from "@etherealengine/common/src/utils/getEnvironment"
-import config from "@etherealengine/common/src/config"
-import {useMemo} from 'react'
-import { InputComponent } from "@etherealengine/spatial/src/input/components/InputComponent"
-import { EngineState } from "@etherealengine/spatial/src/EngineState"
+import { defineAction, defineState, getMutableState, getState, matches, NO_PROXY, none, useHookstate } from "@ir-engine/hyperflux"
+import { NetworkTopics } from "@ir-engine/network"
+import { uploadToFeathersService } from "@ir-engine/client-core/src/util/upload"
+import { fileBrowserUploadPath, uploadAssetPath } from "@ir-engine/common/src/schema.type.module"
+import { isClient } from "@ir-engine/common/src/utils/getEnvironment"
+import config from "@ir-engine/common/src/config"
+import { InputComponent } from "@ir-engine/spatial/src/input/components/InputComponent"
+import { EngineState } from "@ir-engine/spatial/src/EngineState"
 
 export const VoxelActions = {
   setVoxel: defineAction({    type: 'SetVoxel',
@@ -50,7 +49,7 @@ export const writeChunk = (entity: Entity) => {
     args: [
       {
         fileName: file.name,
-        project: 'etherealcraft',
+        project: 'aidan-caruso/etherealcraft',
         path: 'public/world/' + file.name,
         contentType: file.type,
         type: 'thumbnail',
@@ -70,7 +69,8 @@ export const writeWorld = () => {
 const storageProviderHost = config.client.fileServer
 
 export const useLoadChunk = (world: string, id: string) => {
-  const url = `${storageProviderHost}/projects/etherealcraft/public/${world}/${id}.chunk`
+  const url = `${storageProviderHost}${'/projects/aidan-caruso/etherealcraft/public/world/'}${id}.chunk`
+  console.log(url)
   const chunk = useHookstate(null as Uint8Array | null)
   useEffect(() => {
     fetch(url).then((response) => {
@@ -83,31 +83,56 @@ export const useLoadChunk = (world: string, id: string) => {
     })
   }, [])
   
-  return chunk
+  return chunk.get(NO_PROXY)
 }
 
 export const useLoadWorld = (world: string) => {
+  const totalChunks = 4
+  const chunks = [] as (Uint8Array | null)[]
+  for(let x = 0; x < totalChunks; x++) {
+    for(let y = 0; y < totalChunks; y++) {
+      for(let z = 0; z < totalChunks; z++) {
+        chunks.push(useLoadChunk(world, `${x}_${y}_${z}`))
+      }
+    }
+  }
 
+  useEffect(() => {
+    const chunk = chunks[chunks.length-1]
+    console.log(chunk)
+    if(!chunk) return
+    
+    const {chunkSize, setVoxel } = VoxelComponent
+    if(!chunks.length) return
+    let i = 0
+    for (let x = 0; x < chunkSize; x++) {
+      for (let y = 0; y < chunkSize; y++) {
+        for (let z = 0; z < chunkSize; z++) {
+          setVoxel(z, x, y, chunk[i])
+          i++
+        }
+      }
+    }
+  }, [chunks])
 }
 
 export default defineSystem({
   uuid: 'VoxelChunkSystem',
   insert: { after: SimulationSystemGroup },
-   /**@TODO READ/WRITE TESTING ONLY
-  * Replace this with actual UI for writing chunk data on the server
+   /**
+  * @todo Replace this with actual logic for writing chunk data on the server
   */
   execute: () => {
     const buttons = InputComponent.getMergedButtons(getState(EngineState).viewerEntity)
-    if(buttons.F6) writeWorld()
+    if(buttons.KeyP?.down) writeWorld()
   },
+
   reactor: () => {
     const chunkQuery = useQuery([VoxelComponent])
+    const {chunkSize, setVoxel, updateChunkGeometry} = VoxelComponent
+    const totalChunks = 4
     useEffect( () => {
       if(chunkQuery.length === 0) return
-
-      const {chunkSize, setVoxel, updateChunkGeometry} = VoxelComponent
-
-      const totalChunks = 4
 
       /**@todo actual world generation code */
       for (let x = 0; x < chunkSize*totalChunks; x++) {
@@ -132,23 +157,6 @@ export default defineSystem({
       }
       
     }, [chunkQuery])
-
-    const chunk = useLoadChunk('world', '0,0,0')
-
-    useEffect(() => {
-      const {chunkSize, setVoxel } = VoxelComponent
-      console.log(chunk.value)
-      if(!chunk.value) return
-      let i = 0
-      for (let x = 0; x < chunkSize; x++) {
-        for (let y = 0; y < chunkSize; y++) {
-          for (let z = 0; z < chunkSize; z++) {
-            setVoxel(z, x, y, chunk.value[i])
-            i++
-          }
-        }
-      }
-    }, [chunk])
 
     return null
   }

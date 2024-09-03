@@ -1,4 +1,4 @@
-import { isClient } from "@etherealengine/common/src/utils/getEnvironment"
+import { isClient } from "@ir-engine/common/src/utils/getEnvironment"
 
 import { VoxelComponent } from "./components/VoxelChunkComponent"
 import { VoxelChunkNodeEditor } from "./components/VoxelChunkNodeEditor"

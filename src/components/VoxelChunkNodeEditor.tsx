@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ExtensionIcon from '@mui/icons-material/Extension'
-import NodeEditor from '@etherealengine/editor/src/components/properties/NodeEditor'
-import { EditorComponentType, commitProperty, updateProperty } from '@etherealengine/editor/src/components/properties/Util'
+import { EditorComponentType, commitProperty, updateProperty } from '@ir-engine/editor/src/components/properties/Util'
+import NodeEditor from '@ir-engine/ui/src/components/editor/properties/nodeEditor'
 
 export const VoxelChunkNodeEditor: EditorComponentType = (props) => {
   return <NodeEditor description={'Voxel World'} {...props}>

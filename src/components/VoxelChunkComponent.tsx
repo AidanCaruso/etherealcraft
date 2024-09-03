@@ -3,23 +3,24 @@ import {
   Entity,
   createEntity,
   defineComponent,
+  defineQuery,
   getComponent,
   getOptionalComponent,
   hasComponent,
   removeComponent,
   setComponent
-} from '@etherealengine/ecs'
-import { matches } from '@etherealengine/hyperflux'
-import { TransformComponent } from '@etherealengine/spatial'
-import { NameComponent } from '@etherealengine/spatial/src/common/NameComponent'
-import { ColliderComponent } from '@etherealengine/spatial/src/physics/components/ColliderComponent'
-import { RigidBodyComponent } from '@etherealengine/spatial/src/physics/components/RigidBodyComponent'
-import { CollisionGroups } from '@etherealengine/spatial/src/physics/enums/CollisionGroups'
-import { BodyTypes } from '@etherealengine/spatial/src/physics/types/PhysicsTypes'
-import { addObjectToGroup } from '@etherealengine/spatial/src/renderer/components/GroupComponent'
-import { MeshComponent } from '@etherealengine/spatial/src/renderer/components/MeshComponent'
-import { VisibleComponent } from '@etherealengine/spatial/src/renderer/components/VisibleComponent'
-import { EntityTreeComponent } from '@etherealengine/spatial/src/transform/components/EntityTree'
+} from '@ir-engine/ecs'
+import { matches } from '@ir-engine/hyperflux'
+import { TransformComponent } from '@ir-engine/spatial'
+import { NameComponent } from '@ir-engine/spatial/src/common/NameComponent'
+import { ColliderComponent } from '@ir-engine/spatial/src/physics/components/ColliderComponent'
+import { RigidBodyComponent } from '@ir-engine/spatial/src/physics/components/RigidBodyComponent'
+import { CollisionGroups } from '@ir-engine/spatial/src/physics/enums/CollisionGroups'
+import { BodyTypes, Shapes } from '@ir-engine/spatial/src/physics/types/PhysicsTypes'
+import { addObjectToGroup } from '@ir-engine/spatial/src/renderer/components/GroupComponent'
+import { MeshComponent } from '@ir-engine/spatial/src/renderer/components/MeshComponent'
+import { VisibleComponent } from '@ir-engine/spatial/src/renderer/components/VisibleComponent'
+import { EntityTreeComponent } from '@ir-engine/spatial/src/transform/components/EntityTree'
 import {
   BufferAttribute,
   BufferGeometry,
@@ -293,7 +294,7 @@ export const VoxelComponent = defineComponent({
     geometry.getAttribute('uv').needsUpdate = true
     geometry.setIndex(indices)
     setComponent(entity, RigidBodyComponent, { type: BodyTypes.Fixed })
-    setComponent(entity, EntityTreeComponent, { parentEntity: Engine.instance.originEntity })
+    setComponent(entity, EntityTreeComponent, { parentEntity: VoxelComponent.getManagerEntity() })
     setComponent(entity, TransformComponent, {
       position: new Vector3(
         chunkX * VoxelComponent.chunkSize,
@@ -301,13 +302,14 @@ export const VoxelComponent = defineComponent({
         chunkZ * VoxelComponent.chunkSize
       )
     })
-    if (hasComponent(entity, ColliderComponent)) removeComponent(entity, ColliderComponent)
     setComponent(entity, ColliderComponent, {
-      shape: 'mesh',
+      shape: Shapes.Mesh,
       collisionLayer: CollisionGroups.Ground,
       collisionMask: CollisionGroups.Default | CollisionGroups.Avatars
     })
-  }
+  },
+
+  getManagerEntity: () => managerQuery()[0]
 })
 
 export const VoxelChunkComponent = defineComponent({
@@ -325,3 +327,4 @@ export const VoxelChunkComponent = defineComponent({
     if (json.id) component.id.set(json.id)
   }
 })
+const managerQuery = defineQuery([VoxelComponent])

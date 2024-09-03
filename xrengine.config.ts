@@ -23,11 +23,11 @@ All portions of the code written by the Ethereal Engine team are Copyright © 20
 Ethereal Engine. All Rights Reserved.
 */
 
-import type { ProjectConfigInterface } from '@etherealengine/projects/ProjectConfigInterface'
+import type { ProjectConfigInterface } from '@ir-engine/projects/ProjectConfigInterface'
 
 const config: ProjectConfigInterface = {
   onEvent: undefined,
-  thumbnail: '/static/etherealengine_thumbnail.jpg',
+  thumbnail: '/static/ir-engine_thumbnail.jpg',
   routes: {},
   services: undefined,
   databaseSeed: undefined,
