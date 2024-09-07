@@ -279,6 +279,7 @@ export const VoxelComponent = defineComponent({
         fragmentShader: fragmentShader
       })
       mesh.name = chunkId
+      console.log(mesh)
       setComponent(entity, MeshComponent, mesh)
       setComponent(entity, VisibleComponent, true)
       addObjectToGroup(entity, mesh)

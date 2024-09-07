@@ -62,7 +62,6 @@ export const writeChunk = (entity: Entity) => {
 export const writeWorld = () => {
   for(const entity of Object.values(VoxelComponent.chunkIdToEntity)){
     writeChunk(entity)
-    return
   }
 }
 
@@ -88,32 +87,22 @@ export const useLoadChunk = (world: string, id: string) => {
 
 export const useLoadWorld = (world: string) => {
   const totalChunks = 4
-  const chunks = [] as (Uint8Array | null)[]
+  const chunks = {} as Record<string, (Uint8Array | null)>
   for(let x = 0; x < totalChunks; x++) {
-    for(let y = 0; y < totalChunks; y++) {
+    for(let y = 0; y < 1; y++) {
       for(let z = 0; z < totalChunks; z++) {
-        chunks.push(useLoadChunk(world, `${x}_${y}_${z}`))
+        const id = `${x},${y},${z}`
+        chunks[id] = (useLoadChunk(world, id))
       }
     }
   }
-
+  const loadedChunks = useHookstate(null as Record<string, (Uint8Array)> | null)
   useEffect(() => {
-    const chunk = chunks[chunks.length-1]
-    console.log(chunk)
-    if(!chunk) return
-    
-    const {chunkSize, setVoxel } = VoxelComponent
-    if(!chunks.length) return
-    let i = 0
-    for (let x = 0; x < chunkSize; x++) {
-      for (let y = 0; y < chunkSize; y++) {
-        for (let z = 0; z < chunkSize; z++) {
-          setVoxel(z, x, y, chunk[i])
-          i++
-        }
-      }
-    }
+    if(Object.values(chunks).some((chunk) => chunk === null) || loadedChunks.value != null) return
+    loadedChunks.set(chunks as Record<string, (Uint8Array)>)
   }, [chunks])
+
+  return loadedChunks.get(NO_PROXY)
 }
 
 export default defineSystem({
@@ -131,30 +120,57 @@ export default defineSystem({
     const chunkQuery = useQuery([VoxelComponent])
     const {chunkSize, setVoxel, updateChunkGeometry} = VoxelComponent
     const totalChunks = 4
+
+    const chunks = useLoadWorld('world')
+
+    useEffect(() => {
+      if(chunkQuery.length === 0) return
+      
+      if(!chunks) return
+      console.log(chunks)
+      const {chunkSize, setVoxel } = VoxelComponent
+      for (const chunk in chunks){
+        const [chunkX, chunkY, chunkZ] = chunk.split(',').map((n) => parseInt(n)*chunkSize)
+        console.log(chunkX, chunkY, chunkZ)
+        let i = 0
+
+        for (let x = 0; x < chunkSize; x++) {
+          for (let y = 0; y < chunkSize; y++) {
+            for (let z = 0; z < chunkSize; z++) {
+              setVoxel(chunkX+z, chunkY+x, chunkZ+y, chunks[chunk][i])
+              i++
+            }
+          }
+        }
+        updateChunkGeometry(chunkX, chunkY, chunkZ)
+
+      }
+    }, [chunks, chunkQuery])
+
     useEffect( () => {
       if(chunkQuery.length === 0) return
 
       /**@todo actual world generation code */
-      for (let x = 0; x < chunkSize*totalChunks; x++) {
-        for (let y = 0; y < chunkSize*totalChunks; y++) {
-          for (let z = 0; z < chunkSize*totalChunks; z++) {
-            const height = (Math.sin(x / chunkSize * Math.PI * 2) + Math.sin(z / chunkSize * Math.PI * 3)) * (chunkSize / 6) + (chunkSize / 2)
-            if (y < height) {
-              setVoxel(x, y, z, y < height - 1 ? 1 : 2)
-            }
-          }
-        }
-      }
+      // for (let x = 0; x < chunkSize*totalChunks; x++) {
+      //   for (let y = 0; y < chunkSize*totalChunks; y++) {
+      //     for (let z = 0; z < chunkSize*totalChunks; z++) {
+      //       const height = (Math.sin(x / chunkSize * Math.PI * 2) + Math.sin(z / chunkSize * Math.PI * 3)) * (chunkSize / 6) + (chunkSize / 2)
+      //       if (y < height) {
+      //         setVoxel(x, y, z, y < height - 1 ? 1 : 2)
+      //       }
+      //     }
+      //   }
+      // }
 
-      if(isClient){
-        for(let x = 0; x < totalChunks; x++) {
-          for(let y = 0; y < totalChunks; y++) {
-            for(let z = 0; z < totalChunks; z++) {
-              updateChunkGeometry(x*chunkSize, y*chunkSize, z*chunkSize)
-            }
-          }
-        }
-      }
+      // if(isClient){
+      //   for(let x = 0; x < totalChunks; x++) {
+      //     for(let y = 0; y < totalChunks; y++) {
+      //       for(let z = 0; z < totalChunks; z++) {
+      //         updateChunkGeometry(x*chunkSize, y*chunkSize, z*chunkSize)
+      //       }
+      //     }
+      //   }
+      // }
       
     }, [chunkQuery])
 
