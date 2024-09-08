@@ -1,6 +1,6 @@
 ### IR Engine Voxel Terrain Project
 
-Networked voxel terrain project
+Networked voxel terrain project. Very experimental and half baked.
 
 **Local installation**
 - Use the clone-project npm script to clone the project in its organization folder
