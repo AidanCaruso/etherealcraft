@@ -119,7 +119,8 @@ export const useLoadChunk = (world: string, id: string) => {
 export const useLoadWorld = (world: string) => {
   const chunks = {} as Record<string, Uint8Array | null | Error>
   for (let x = -halfSize; x < halfSize; x++) {
-    for (let y = -halfSize; y < 1; y++) {
+    /**@TODO TODOTODOTODO!!!!!!!!! */
+    for (let y = 0; y < 1; y++) {
       for (let z = -halfSize; z < halfSize; z++) {
         const id = `${x},${y},${z}`
         chunks[id] = useLoadChunk(world, id)
@@ -165,7 +166,7 @@ export default defineSystem({
 })
 
 /**@todo STOP DOING THIS */
-const totalChunks = 16
+const totalChunks = 8
 const halfSize = totalChunks * 0.5
 
 const WorldGenerationReactor = (props: { worldUuid: string }) => {
