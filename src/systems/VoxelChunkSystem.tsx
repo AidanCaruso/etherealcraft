@@ -54,7 +54,7 @@ export const VoxelState = defineState({
       const { position, id, from } = voxelState.value[voxelState.length - 1]
       VoxelComponent.setVoxel(position.x, position.y, position.z, id)
       VoxelComponent.updateVoxelGeometry(position.x, position.y, position.z)
-      
+
       /**@todo reimplement this, it runs for all clients and only succedes for those with proper scopes*/
       if (!writingChunk) {
         writeChunk(
@@ -198,7 +198,7 @@ const WorldGenerationReactor = (props: { worldUuid: string }) => {
         }
       }
 
-      //writeWorld(worldUuid)
+      writeWorld(worldUuid)
       return
     }
 
