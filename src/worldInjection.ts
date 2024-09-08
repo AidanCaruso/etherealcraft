@@ -1,11 +1,11 @@
-import { isClient } from "@ir-engine/common/src/utils/getEnvironment"
 
+import { isClient } from "@ir-engine/hyperflux"
 import { VoxelComponent } from "./components/VoxelChunkComponent"
 import { VoxelChunkNodeEditor } from "./components/VoxelChunkNodeEditor"
 
-import VoxelChunkSystem from "./systems/VoxelChunkSystem"
+import('./systems/VoxelChunkSystem')
+import('./components/VoxelChunkComponent')
 if(isClient) {
   import('../engine/RegisterVoxelPrefab')
-  import('./components/VoxelChunkComponent')
   import('./systems/VoxelInputSystem')
 }

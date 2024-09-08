@@ -13,8 +13,7 @@
         4,
         5,
         6,
-        7,
-        8
+        7
       ]
     }
   ],
@@ -377,7 +376,7 @@
         "EE_uuid": "e7d6bfb1-6390-4a8b-b744-da83b059c2d3",
         "EE_visible": true,
         "EE_skybox": {
-          "backgroundColor": 13752319,
+          "backgroundColor": 3026478,
           "equirectangularPath": "",
           "cubemapPath": "__$project$__/ir-engine/default-project/assets/skyboxsun25deg/",
           "backgroundType": 0,
@@ -407,9 +406,9 @@
         1.2246467991473532e-16,
         -1,
         0,
-        9.00000000000002,
-        20.999999999999986,
-        17,
+        1.66756111436452e-14,
+        16.5,
+        2.0206672185931347e-15,
         1
       ],
       "name": "spawn point",
@@ -468,48 +467,6 @@
       }
     },
     {
-      "name": "platform",
-      "extensions": {
-        "EE_model": {
-          "src": "__$project$__/ir-engine/default-project/assets/platform.glb",
-          "cameraOcclusion": true,
-          "convertToVRM": false
-        },
-        "EE_uuid": "685c48da-e2a0-4a9a-af7c-c5a3c187c99a",
-        "EE_visible": true,
-        "EE_shadow": {
-          "cast": true,
-          "receive": true
-        },
-        "EE_envmap": {
-          "type": "Skybox",
-          "envMapTextureType": "Equirectangular",
-          "envMapSourceColor": 4095,
-          "envMapSourceURL": "",
-          "envMapSourceEntityUUID": "",
-          "envMapIntensity": 1
-        }
-      },
-      "matrix": [
-        1,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0.30000000000000004,
-        0,
-        0,
-        1
-      ]
-    },
-    {
       "name": "Spot_Light",
       "extensions": {
         "EE_uuid": "f2495904-bfe4-4777-ba0b-80aaee34e46b",
@@ -549,7 +506,7 @@
     {
       "name": "New Object",
       "extensions": {
-        "EE_uuid": "fa16f954-02c3-4448-83f7-2ebd06c58361",
+        "EE_uuid": "dcdf1a4b-4592-4f27-ad50-4f9973648d47",
         "EE_visible": true,
         "EC_Voxel_Manager": {
           "worldName": "Voxel World"

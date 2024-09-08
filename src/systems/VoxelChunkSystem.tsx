@@ -1,9 +1,9 @@
 import config from '@ir-engine/common/src/config'
-import { isClient } from '@ir-engine/common/src/utils/getEnvironment'
 import {
   defineQuery,
   defineSystem,
   Entity,
+  EntityUUID,
   getComponent,
   SimulationSystemGroup,
   useOptionalComponent,
@@ -18,6 +18,7 @@ import {
   getState,
   matches,
   NO_PROXY,
+  PeerID,
   useHookstate
 } from '@ir-engine/hyperflux'
 import { NetworkTopics } from '@ir-engine/network'
@@ -28,8 +29,8 @@ import {
   getAncestorWithComponents,
   useAncestorWithComponents
 } from '@ir-engine/spatial/src/transform/components/EntityTree'
-import { matchesVector, Vector, VoxelChunkComponent, VoxelComponent } from '../components/VoxelChunkComponent'
 import React, { useEffect } from 'react'
+import { matchesVector, Vector, VoxelChunkComponent, VoxelComponent } from '../components/VoxelChunkComponent'
 
 export const VoxelActions = {
   setVoxel: defineAction({ type: 'SetVoxel', position: matchesVector, id: matches.number, $topic: NetworkTopics.world })
@@ -38,11 +39,11 @@ export const VoxelActions = {
 export const VoxelState = defineState({
   name: 'VoxelState',
 
-  initial: [] as { position: Vector; id: number }[],
+  initial: [] as { position: Vector; id: number, from: PeerID }[],
 
   receptors: {
     onSetVoxel: VoxelActions.setVoxel.receive((action) => {
-      getMutableState(VoxelState).merge([{ id: action.id, position: action.position }])
+      getMutableState(VoxelState).merge([{ id: action.id, position: action.position, from: action.$peer }])
     })
   },
 
@@ -50,35 +51,38 @@ export const VoxelState = defineState({
     const voxelState = useHookstate(getMutableState(VoxelState))
     useEffect(() => {
       if (voxelState.value.length === 0) return
-      const { position, id } = voxelState.value[voxelState.length - 1]
+      const { position, id, from } = voxelState.value[voxelState.length - 1]
       VoxelComponent.setVoxel(position.x, position.y, position.z, id)
       VoxelComponent.updateVoxelGeometry(position.x, position.y, position.z)
+      
+      /**@todo reimplement this, it runs for all clients and only succedes for those with proper scopes*/
+      if (!writingChunk) {
+        writeChunk(
+          VoxelComponent.chunkIdToEntity[VoxelComponent.computeChunkId(position.x, position.y, position.z)],
+          getComponent(getAncestorWithComponents(chunkQuery()[0], [SceneComponent]), UUIDComponent)
+        )
+      }
     }, [voxelState])
     return null
   }
 })
 
+let writingChunk = false
 export const writeChunk = (entity: Entity, world: string) => {
   const chunkComponent = getComponent(entity, VoxelChunkComponent)
   const blob = [chunkComponent.voxels.buffer]
   const file = new File(blob, `${chunkComponent.id}.chunk`)
-  uploadProjectFiles(
-    'aidan-caruso/etherealcraft',
-    [file],
-    [`projects/aidan-caruso/etherealcraft/public/world/${world}`]
-  )
-
-  // uploadToFeathersService(fileBrowserUploadPath, [file], {
-  //   args: [
-  //     {
-  //       fileName: file.name,
-  //       project: 'aidan-caruso/etherealcraft',
-  //       path: `public/world/${world}/${file.name}`,
-  //       contentType: file.type,
-  //       type: 'thumbnail',
-  //     }
-  //   ]
-  // })
+  writingChunk = true
+  /**@todo implement proper scoping for voxel world owners/editors */
+  Promise.all(
+    uploadProjectFiles(
+      'aidan-caruso/etherealcraft',
+      [file],
+      [`projects/aidan-caruso/etherealcraft/public/world/${world}`]
+    ).promises
+  ).then(() => {
+    writingChunk = false
+  })
 }
 
 export const writeWorld = (world: string) => {
@@ -91,7 +95,6 @@ const storageProviderHost = config.client.fileServer
 
 export const useLoadChunk = (world: string, id: string) => {
   const url = `${storageProviderHost}/projects/aidan-caruso/etherealcraft/public/world/${world}/${id}.chunk`
-  console.log(url)
   const chunk = useHookstate(null as Uint8Array | null | Error)
   useEffect(() => {
     if (!world) {
@@ -114,11 +117,10 @@ export const useLoadChunk = (world: string, id: string) => {
   return chunk.get(NO_PROXY)
 }
 export const useLoadWorld = (world: string) => {
-  const totalChunks = 4
   const chunks = {} as Record<string, Uint8Array | null | Error>
-  for (let x = 0; x < totalChunks; x++) {
-    for (let y = 0; y < 1; y++) {
-      for (let z = 0; z < totalChunks; z++) {
+  for (let x = -halfSize; x < halfSize; x++) {
+    for (let y = -halfSize; y < 1; y++) {
+      for (let z = -halfSize; z < halfSize; z++) {
         const id = `${x},${y},${z}`
         chunks[id] = useLoadChunk(world, id)
       }
@@ -158,30 +160,26 @@ export default defineSystem({
     const scene = useAncestorWithComponents(chunkQuery[0], [SceneComponent])
     const sceneUuid = useOptionalComponent(scene, UUIDComponent)
 
-    return <>
-      {sceneUuid?.value && <WorldGenerationReactor worldUuid={sceneUuid.value} />}
-    </>
+    return <>{sceneUuid?.value && <WorldGenerationReactor worldUuid={sceneUuid.value} />}</>
   }
 })
+
+/**@todo STOP DOING THIS */
+const totalChunks = 16
+const halfSize = totalChunks * 0.5
 
 const WorldGenerationReactor = (props: { worldUuid: string }) => {
   const worldUuid = props.worldUuid
   const chunks = useLoadWorld(worldUuid)
 
-  /**@todo STOP DOING THIS */
-  const totalChunks = 4
-  
   const { chunkSize, setVoxel, updateChunkGeometry } = VoxelComponent
-
   useEffect(() => {
-    if (!chunks) return
-
-    if (chunks instanceof Error) {
+    if (!chunks || chunks instanceof Error) {
       console.log('generating a new world')
       /**@todo actual world generation code */
-      for (let x = 0; x < chunkSize * totalChunks; x++) {
-        for (let y = 0; y < chunkSize * totalChunks; y++) {
-          for (let z = 0; z < chunkSize * totalChunks; z++) {
+      for (let x = -halfSize*chunkSize; x < halfSize * chunkSize; x++) {
+        for (let y = 0; y < halfSize * chunkSize; y++) {
+          for (let z = -halfSize*chunkSize; z < halfSize * chunkSize; z++) {
             const height =
               (Math.sin((x / chunkSize) * Math.PI * 2) + Math.sin((z / chunkSize) * Math.PI * 3)) * (chunkSize / 6) +
               chunkSize / 2
@@ -192,21 +190,20 @@ const WorldGenerationReactor = (props: { worldUuid: string }) => {
         }
       }
 
-      if (isClient) {
-        for (let x = 0; x < totalChunks; x++) {
-          for (let y = 0; y < totalChunks; y++) {
-            for (let z = 0; z < totalChunks; z++) {
-              updateChunkGeometry(x * chunkSize, y * chunkSize, z * chunkSize)
-            }
+      for (let x = -halfSize; x < halfSize; x++) {
+        for (let y = -halfSize; y < halfSize; y++) {
+          for (let z = -halfSize; z < halfSize; z++) {
+            updateChunkGeometry(x * chunkSize, y * chunkSize, z * chunkSize)
           }
         }
       }
+
+      //writeWorld(worldUuid)
       return
     }
 
     for (const chunk in chunks) {
       const [chunkX, chunkY, chunkZ] = chunk.split(',').map((n) => parseInt(n) * chunkSize)
-      console.log(chunkX, chunkY, chunkZ)
       let i = 0
 
       for (let x = 0; x < chunkSize; x++) {
@@ -217,8 +214,12 @@ const WorldGenerationReactor = (props: { worldUuid: string }) => {
           }
         }
       }
-      updateChunkGeometry(chunkX, chunkY, chunkZ)
     }
+    for(const chunk in chunks){
+      const [chunkX, chunkY, chunkZ] = chunk.split(',').map((n) => parseInt(n) * chunkSize)
+      updateChunkGeometry(chunkX, chunkY, chunkZ)
+    } 
+  
   }, [chunks])
   return null
 }

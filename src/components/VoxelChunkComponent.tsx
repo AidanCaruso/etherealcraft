@@ -60,7 +60,7 @@ export const VoxelComponent = defineComponent({
     return({worldName: component.worldName.value})
   },
 
-  chunkSize: 32,
+  chunkSize: 16,
   tileSize: 1,
   tileTextureSize: 64,
 
@@ -157,6 +157,7 @@ export const VoxelComponent = defineComponent({
     })
     setComponent(chunkEntity, NameComponent, 'Voxel Chunk')
     VoxelComponent.chunkIdToEntity[chunkId] = chunkEntity
+    console.log('created new chunk at', x, y, z)
   },
 
   getChunkAtVoxel: (x, y, z) => {
@@ -279,7 +280,6 @@ export const VoxelComponent = defineComponent({
         fragmentShader: fragmentShader
       })
       mesh.name = chunkId
-      console.log(mesh)
       setComponent(entity, MeshComponent, mesh)
       setComponent(entity, VisibleComponent, true)
       addObjectToGroup(entity, mesh)
@@ -288,13 +288,9 @@ export const VoxelComponent = defineComponent({
     const { positions, normals, uvs, indices } = VoxelComponent.generateGeometryDataForChunk(chunkX, chunkY, chunkZ)
     const geometry = getComponent(entity, MeshComponent).geometry
     geometry.setAttribute('position', new BufferAttribute(new Float32Array(positions), 3))
-    geometry.getAttribute('position').needsUpdate = true
     geometry.setAttribute('normal', new BufferAttribute(new Float32Array(normals), 3))
-    geometry.getAttribute('normal').needsUpdate = true
     geometry.setAttribute('uv', new BufferAttribute(new Float32Array(uvs), 2))
-    geometry.getAttribute('uv').needsUpdate = true
     geometry.setIndex(indices)
-    setComponent(entity, RigidBodyComponent, { type: BodyTypes.Fixed })
     setComponent(entity, EntityTreeComponent, { parentEntity: VoxelComponent.getManagerEntity() })
     setComponent(entity, TransformComponent, {
       position: new Vector3(
@@ -303,6 +299,7 @@ export const VoxelComponent = defineComponent({
         chunkZ * VoxelComponent.chunkSize
       )
     })
+    setComponent(entity, RigidBodyComponent, { type: BodyTypes.Fixed })
     setComponent(entity, ColliderComponent, {
       shape: Shapes.Mesh,
       collisionLayer: CollisionGroups.Ground,
