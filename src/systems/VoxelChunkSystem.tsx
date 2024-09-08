@@ -175,7 +175,8 @@ const WorldGenerationReactor = (props: { worldUuid: string }) => {
 
   const { chunkSize, setVoxel, updateChunkGeometry } = VoxelComponent
   useEffect(() => {
-    if (!chunks || chunks instanceof Error) {
+    if(!chunks) return
+    if (chunks instanceof Error) {
       console.log('generating a new world')
       /**@todo actual world generation code */
       for (let x = -halfSize*chunkSize; x < halfSize * chunkSize; x++) {
