@@ -7,14 +7,6 @@
     "dependencies": [],
     "thumbnailKey": "projects/ir-engine/default-project/public/scenes/default.thumbnail.jpg"
   },
-  "public/scenes/New-Scene.gltf": {
-    "type": "scene",
-    "tags": [
-      "Model"
-    ],
-    "dependencies": [],
-    "thumbnailKey": "projects/ir-engine/default-project/public/scenes/default.thumbnail.jpg"
-  },
   "public/world/dcfbe5cf-4fae-4733-9eb4-78d520d4175f/0,0,0.chunk": {
     "type": "file",
     "tags": [
