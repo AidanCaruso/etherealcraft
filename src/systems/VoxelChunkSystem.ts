@@ -70,7 +70,7 @@ const storageProviderHost = config.client.fileServer
 export const useLoadChunk = (world: string, id: string) => {
   const url = `${storageProviderHost}${'/projects/aidan-caruso/etherealcraft/public/world/'}${id}.chunk`
   console.log(url)
-  const chunk = useHookstate(null as Uint8Array | null)
+  const chunk = useHookstate(null as Uint8Array | null | Error)
   useEffect(() => {
     fetch(url).then((response) => {
       if(response.ok){
@@ -78,7 +78,7 @@ export const useLoadChunk = (world: string, id: string) => {
           chunk.set(new Uint8Array(buffer))
         })
       }
-      else{throw new Error('Failed to load chunk at ' + url)}
+      else{chunk.set(new Error(`Couldn't load chunk ${String(response.status)}`))}
     })
   }, [])
   
@@ -87,7 +87,7 @@ export const useLoadChunk = (world: string, id: string) => {
 
 export const useLoadWorld = (world: string) => {
   const totalChunks = 4
-  const chunks = {} as Record<string, (Uint8Array | null)>
+  const chunks = {} as Record<string, (Uint8Array | null | Error)>
   for(let x = 0; x < totalChunks; x++) {
     for(let y = 0; y < 1; y++) {
       for(let z = 0; z < totalChunks; z++) {
@@ -96,9 +96,14 @@ export const useLoadWorld = (world: string) => {
       }
     }
   }
-  const loadedChunks = useHookstate(null as Record<string, (Uint8Array)> | null)
+  const loadedChunks = useHookstate(null as Record<string, (Uint8Array)> | null | Error)
   useEffect(() => {
-    if(Object.values(chunks).some((chunk) => chunk === null) || loadedChunks.value != null) return
+    const chunkValues = Object.values(chunks)
+    if(chunkValues.some((chunk) => chunk === null) || loadedChunks.value != null) return
+    if(chunkValues.some((chunk) => chunk instanceof Error)){
+      loadedChunks.set(new Error('Stopped loading world'))
+      return
+    }
     loadedChunks.set(chunks as Record<string, (Uint8Array)>)
   }, [chunks])
 
@@ -128,7 +133,33 @@ export default defineSystem({
       
       if(!chunks) return
       console.log(chunks)
-      const {chunkSize, setVoxel } = VoxelComponent
+
+      if(chunks instanceof Error) {
+        /**@todo actual world generation code */
+        for (let x = 0; x < chunkSize*totalChunks; x++) {
+          for (let y = 0; y < chunkSize*totalChunks; y++) {
+            for (let z = 0; z < chunkSize*totalChunks; z++) {
+              const height = (Math.sin(x / chunkSize * Math.PI * 2) + Math.sin(z / chunkSize * Math.PI * 3)) * (chunkSize / 6) + (chunkSize / 2)
+              if (y < height) {
+                setVoxel(x, y, z, y < height - 1 ? 1 : 2)
+              }
+            }
+          }
+        }
+
+        if(isClient){
+          for(let x = 0; x < totalChunks; x++) {
+            for(let y = 0; y < totalChunks; y++) {
+              for(let z = 0; z < totalChunks; z++) {
+                updateChunkGeometry(x*chunkSize, y*chunkSize, z*chunkSize)
+              }
+            }
+          }
+        }
+
+        return
+      }
+
       for (const chunk in chunks){
         const [chunkX, chunkY, chunkZ] = chunk.split(',').map((n) => parseInt(n)*chunkSize)
         console.log(chunkX, chunkY, chunkZ)
@@ -150,27 +181,7 @@ export default defineSystem({
     useEffect( () => {
       if(chunkQuery.length === 0) return
 
-      /**@todo actual world generation code */
-      // for (let x = 0; x < chunkSize*totalChunks; x++) {
-      //   for (let y = 0; y < chunkSize*totalChunks; y++) {
-      //     for (let z = 0; z < chunkSize*totalChunks; z++) {
-      //       const height = (Math.sin(x / chunkSize * Math.PI * 2) + Math.sin(z / chunkSize * Math.PI * 3)) * (chunkSize / 6) + (chunkSize / 2)
-      //       if (y < height) {
-      //         setVoxel(x, y, z, y < height - 1 ? 1 : 2)
-      //       }
-      //     }
-      //   }
-      // }
-
-      // if(isClient){
-      //   for(let x = 0; x < totalChunks; x++) {
-      //     for(let y = 0; y < totalChunks; y++) {
-      //       for(let z = 0; z < totalChunks; z++) {
-      //         updateChunkGeometry(x*chunkSize, y*chunkSize, z*chunkSize)
-      //       }
-      //     }
-      //   }
-      // }
+      
       
     }, [chunkQuery])
 
