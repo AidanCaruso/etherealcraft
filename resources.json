@@ -1,4 +1,12 @@
 {
+  "public/scenes/DemoScene.gltf": {
+    "type": "scene",
+    "tags": [
+      "Model"
+    ],
+    "dependencies": [],
+    "thumbnailKey": "projects/ir-engine/default-project/public/scenes/default.thumbnail.jpg"
+  },
   "public/scenes/New-Scene.gltf": {
     "type": "scene",
     "tags": [
