@@ -6,6 +6,7 @@ import {
   EntityUUID,
   getComponent,
   SimulationSystemGroup,
+  useComponent,
   useOptionalComponent,
   useQuery,
   UUIDComponent
@@ -31,6 +32,8 @@ import {
 } from '@ir-engine/spatial/src/transform/components/EntityTree'
 import React, { useEffect } from 'react'
 import { matchesVector, Vector, VoxelChunkComponent, VoxelComponent } from '../components/VoxelChunkComponent'
+import { generateWorldTerrain } from '../worldgen/WorldGeneration'
+import { WebGLRenderer } from 'three'
 
 export const VoxelActions = {
   setVoxel: defineAction({ type: 'SetVoxel', position: matchesVector, id: matches.number, $topic: NetworkTopics.world })
@@ -131,11 +134,6 @@ export const useLoadWorld = (world: string) => {
   useEffect(() => {
     const chunkValues = Object.values(chunks)
     if (chunkValues.some((chunk) => chunk === null) || loadedChunks.value != null) return
-    if (chunkValues.some((chunk) => chunk instanceof Error)) {
-      loadedChunks.set(new Error('Stopped loading world'))
-      console.error(loadedChunks.value)
-      return
-    }
     loadedChunks.set(chunks as Record<string, Uint8Array>)
   }, [chunks])
 
@@ -147,21 +145,20 @@ export default defineSystem({
   uuid: 'VoxelChunkSystem',
   insert: { after: SimulationSystemGroup },
   /**
-   * @todo Replace this with actual logic for writing chunk data on the server
+   * @todo Replace this with actual logic for writing chunk data
    */
   execute: () => {
     const buttons = InputComponent.getMergedButtons(getState(EngineState).viewerEntity)
     if (buttons.KeyP?.down)
-      writeWorld(getComponent(getAncestorWithComponents(chunkQuery()[0], [SceneComponent]), UUIDComponent))
+     writeWorld(getComponent(getAncestorWithComponents(chunkQuery()[0], [SceneComponent]), UUIDComponent))
   },
 
   reactor: () => {
     const chunkQuery = useQuery([VoxelComponent])
 
-    const scene = useAncestorWithComponents(chunkQuery[0], [SceneComponent])
-    const sceneUuid = useOptionalComponent(scene, UUIDComponent)
+    console.log(chunkQuery[0])
 
-    return <>{sceneUuid?.value && <WorldGenerationReactor worldUuid={sceneUuid.value} />}</>
+    return <>{chunkQuery[0] && <SceneReactor worldEntity={chunkQuery[0]} />}</>
   }
 })
 
@@ -169,59 +166,63 @@ export default defineSystem({
 const totalChunks = 8
 const halfSize = totalChunks * 0.5
 
-const WorldGenerationReactor = (props: { worldUuid: string }) => {
-  const worldUuid = props.worldUuid
-  const chunks = useLoadWorld(worldUuid)
+const SceneReactor = (props: {worldEntity: Entity}) => {
+  const scene = useAncestorWithComponents(props.worldEntity, [SceneComponent])
+  const worldUuid = useOptionalComponent(scene, UUIDComponent)
+  return <>{worldUuid?.value && <WorldGenerationReactor worldUuid={worldUuid.value} />}</>
+}
 
+const WorldGenerationReactor = (props: { worldUuid: string }) => {
+  const { worldUuid } = props
+  const chunks = useLoadWorld(worldUuid)
+  console.log(worldUuid)
   const { chunkSize, setVoxel, updateChunkGeometry } = VoxelComponent
+
   useEffect(() => {
     if(!chunks) return
-    if (chunks instanceof Error) {
-      console.log('generating a new world')
-      /**@todo actual world generation code */
-      for (let x = -halfSize*chunkSize; x < halfSize * chunkSize; x++) {
-        for (let y = 0; y < halfSize * chunkSize; y++) {
-          for (let z = -halfSize*chunkSize; z < halfSize * chunkSize; z++) {
-            const height =
-              (Math.sin((x / chunkSize) * Math.PI * 2) + Math.sin((z / chunkSize) * Math.PI * 3)) * (chunkSize / 6) +
-              chunkSize / 2
-            if (y < height) {
-              setVoxel(x, y, z, y < height - 1 ? 1 : 2)
-            }
-          }
-        }
-      }
 
-      for (let x = -halfSize; x < halfSize; x++) {
-        for (let y = -halfSize; y < halfSize; y++) {
-          for (let z = -halfSize; z < halfSize; z++) {
-            updateChunkGeometry(x * chunkSize, y * chunkSize, z * chunkSize)
-          }
-        }
-      }
+    const terrainData = generateWorldTerrain(VoxelComponent.chunkSize*totalChunks)
 
-      writeWorld(worldUuid)
-      return
-    }
+    /**@todo ugly ugly ugly loops */
+    for(const chunk in chunks)
+      GenerateChunk(chunk, chunks[chunk], terrainData, worldUuid)
 
-    for (const chunk in chunks) {
-      const [chunkX, chunkY, chunkZ] = chunk.split(',').map((n) => parseInt(n) * chunkSize)
-      let i = 0
-
-      for (let x = 0; x < chunkSize; x++) {
-        for (let y = 0; y < chunkSize; y++) {
-          for (let z = 0; z < chunkSize; z++) {
-            setVoxel(chunkX + z, chunkY + x, chunkZ + y, chunks[chunk][i])
-            i++
-          }
-        }
-      }
-    }
     for(const chunk in chunks){
       const [chunkX, chunkY, chunkZ] = chunk.split(',').map((n) => parseInt(n) * chunkSize)
       updateChunkGeometry(chunkX, chunkY, chunkZ)
     } 
-  
+    
   }, [chunks])
   return null
+}
+
+const GenerateChunk = (chunkId: string, chunk: Uint8Array | Error, terrainData: Float32Array, worldUuid: string) => {
+  const { chunkSize, setVoxel, updateChunkGeometry } = VoxelComponent
+  const [chunkX, chunkY, chunkZ] = chunkId.split(',').map((n) => parseInt(n) * chunkSize)
+  if (chunk instanceof Error){
+    for (let x = 0; x < chunkSize; x++) {
+      for (let y = 0; y < chunkSize; y++) {
+        for (let z = 0; z < chunkSize; z++) {
+          const index = (((halfSize*chunkSize)+(chunkX+x))*(chunkSize*totalChunks)+((halfSize*chunkSize)+(chunkZ+z)))*4
+          const height = 10+terrainData[index]*5
+          if (chunkY+y < height) {
+            setVoxel(chunkX+x, chunkY+y, chunkZ+z, chunkY+y < height - 1 ? 1 : 2)
+          }
+        }
+      }
+    }
+    writeChunk(VoxelComponent.chunkIdToEntity[VoxelComponent.computeChunkId(chunkX, chunkY, chunkZ)], worldUuid)  
+  }
+  else{
+    console.log(chunk)
+    let i = 0
+    for (let x = 0; x < chunkSize; x++) {
+      for (let y = 0; y < chunkSize; y++) {
+        for (let z = 0; z < chunkSize; z++) {
+          setVoxel(chunkX + z, chunkY + x, chunkZ + y, chunk[i])
+          i++
+        }
+      }
+    }
+  }
 }

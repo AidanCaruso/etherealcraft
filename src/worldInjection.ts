@@ -8,4 +8,5 @@ import('./components/VoxelChunkComponent')
 if(isClient) {
   import('../engine/RegisterVoxelPrefab')
   import('./systems/VoxelInputSystem')
+  import('./worldgen/WorldGeneration')
 }
