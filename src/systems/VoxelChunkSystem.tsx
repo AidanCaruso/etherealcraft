@@ -5,6 +5,7 @@ import {
   Entity,
   EntityUUID,
   getComponent,
+  getOptionalComponent,
   SimulationSystemGroup,
   useComponent,
   useOptionalComponent,
@@ -72,7 +73,8 @@ export const VoxelState = defineState({
 
 let writingChunk = false
 export const writeChunk = (entity: Entity, world: string) => {
-  const chunkComponent = getComponent(entity, VoxelChunkComponent)
+  const chunkComponent = getOptionalComponent(entity, VoxelChunkComponent)
+  if(!chunkComponent) return
   const blob = [chunkComponent.voxels.buffer]
   const file = new File(blob, `${chunkComponent.id}.chunk`)
   writingChunk = true
@@ -123,7 +125,7 @@ export const useLoadWorld = (world: string) => {
   const chunks = {} as Record<string, Uint8Array | null | Error>
   for (let x = -halfSize; x < halfSize; x++) {
     /**@TODO TODOTODOTODO!!!!!!!!! */
-    for (let y = 0; y < 1; y++) {
+    for (let y = 0; y < halfSize; y++) {
       for (let z = -halfSize; z < halfSize; z++) {
         const id = `${x},${y},${z}`
         chunks[id] = useLoadChunk(world, id)
