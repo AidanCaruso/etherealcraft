@@ -7,5 +7,4 @@ Networked voxel terrain project. Very experimental and half baked.
 - Start the dev server
 - Open the demo scene in the studio or in a location
 - In a location you can break or place blocks with left or right click respectively
-- If you're an admin, you may save a world by pressing `P` on your keyboard
 ![image](https://github.com/user-attachments/assets/dfe2511e-16b0-432a-abf4-8eb375a94ab3)
