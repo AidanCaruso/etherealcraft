@@ -23,7 +23,7 @@ export const fragmentShader = `
     float lambertian = max(dot(vNormal, lightDirection), 0.0);
     lambertian = 0.5 + lambertian * 0.5; // Add ambient light
     vec3 color = lambertian * lightColor; // Apply light color
-    int index = int(vUv.x);
+    int index = int(vUv.x+vUv.y);
     //multiply color by colors[index] to get the final color
     color *= colors[index];
 

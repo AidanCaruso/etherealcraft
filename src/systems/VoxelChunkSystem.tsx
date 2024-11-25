@@ -3,11 +3,9 @@ import {
   defineQuery,
   defineSystem,
   Entity,
-  EntityUUID,
   getComponent,
   getOptionalComponent,
   SimulationSystemGroup,
-  useComponent,
   useOptionalComponent,
   useQuery,
   UUIDComponent
@@ -34,7 +32,6 @@ import {
 import React, { useEffect } from 'react'
 import { matchesVector, Vector, VoxelChunkComponent, VoxelComponent } from '../components/VoxelChunkComponent'
 import { generateWorldTerrain } from '../worldgen/WorldGeneration'
-import { WebGLRenderer } from 'three'
 
 export const VoxelActions = {
   setVoxel: defineAction({ type: 'SetVoxel', position: matchesVector, id: matches.number, $topic: NetworkTopics.world })
@@ -43,7 +40,7 @@ export const VoxelActions = {
 export const VoxelState = defineState({
   name: 'VoxelState',
 
-  initial: [] as { position: Vector; id: number, from: PeerID }[],
+  initial: [] as { position: Vector; id: number; from: PeerID }[],
 
   receptors: {
     onSetVoxel: VoxelActions.setVoxel.receive((action) => {
@@ -74,16 +71,16 @@ export const VoxelState = defineState({
 let writingChunk = false
 export const writeChunk = (entity: Entity, world: string) => {
   const chunkComponent = getOptionalComponent(entity, VoxelChunkComponent)
-  if(!chunkComponent) return
+  if (!chunkComponent) return
   const blob = [chunkComponent.voxels.buffer]
   const file = new File(blob, `${chunkComponent.id}.chunk`)
   writingChunk = true
   /**@todo implement proper scoping for voxel world owners/editors */
   Promise.all(
     uploadProjectFiles(
-      'aidan-caruso/etherealcraft',
+      'AidanCaruso/etherealcraft',
       [file],
-      [`projects/aidan-caruso/etherealcraft/public/world/${world}`]
+      [`projects/AidanCaruso/etherealcraft/public/world/${world}`]
     ).promises
   ).then(() => {
     writingChunk = false
@@ -99,7 +96,7 @@ export const writeWorld = (world: string) => {
 const storageProviderHost = config.client.fileServer
 
 export const useLoadChunk = (world: string, id: string) => {
-  const url = `${storageProviderHost}/projects/aidan-caruso/etherealcraft/public/world/${world}/${id}.chunk`
+  const url = `${storageProviderHost}/projects/AidanCaruso/etherealcraft/public/world/${world}/${id}.chunk`
   const chunk = useHookstate(null as Uint8Array | null | Error)
   useEffect(() => {
     if (!world) {
@@ -152,7 +149,7 @@ export default defineSystem({
   execute: () => {
     const buttons = InputComponent.getMergedButtons(getState(EngineState).viewerEntity)
     if (buttons.KeyP?.down)
-     writeWorld(getComponent(getAncestorWithComponents(chunkQuery()[0], [SceneComponent]), UUIDComponent))
+      writeWorld(getComponent(getAncestorWithComponents(chunkQuery()[0], [SceneComponent]), UUIDComponent))
   },
 
   reactor: () => {
@@ -168,7 +165,7 @@ export default defineSystem({
 const totalChunks = 8
 const halfSize = totalChunks * 0.5
 
-const SceneReactor = (props: {worldEntity: Entity}) => {
+const SceneReactor = (props: { worldEntity: Entity }) => {
   const scene = useAncestorWithComponents(props.worldEntity, [SceneComponent])
   const worldUuid = useOptionalComponent(scene, UUIDComponent)
   return <>{worldUuid?.value && <WorldGenerationReactor worldUuid={worldUuid.value} />}</>
@@ -181,19 +178,17 @@ const WorldGenerationReactor = (props: { worldUuid: string }) => {
   const { chunkSize, setVoxel, updateChunkGeometry } = VoxelComponent
 
   useEffect(() => {
-    if(!chunks) return
+    if (!chunks) return
 
-    const terrainData = generateWorldTerrain(VoxelComponent.chunkSize*totalChunks)
+    const terrainData = generateWorldTerrain(VoxelComponent.chunkSize * totalChunks)
 
     /**@todo ugly ugly ugly loops */
-    for(const chunk in chunks)
-      GenerateChunk(chunk, chunks[chunk], terrainData, worldUuid)
+    for (const chunk in chunks) GenerateChunk(chunk, chunks[chunk], terrainData, worldUuid)
 
-    for(const chunk in chunks){
+    for (const chunk in chunks) {
       const [chunkX, chunkY, chunkZ] = chunk.split(',').map((n) => parseInt(n) * chunkSize)
       updateChunkGeometry(chunkX, chunkY, chunkZ)
-    } 
-    
+    }
   }, [chunks])
   return null
 }
@@ -201,21 +196,23 @@ const WorldGenerationReactor = (props: { worldUuid: string }) => {
 const GenerateChunk = (chunkId: string, chunk: Uint8Array | Error, terrainData: Float32Array, worldUuid: string) => {
   const { chunkSize, setVoxel, updateChunkGeometry } = VoxelComponent
   const [chunkX, chunkY, chunkZ] = chunkId.split(',').map((n) => parseInt(n) * chunkSize)
-  if (chunk instanceof Error){
+  if (chunk instanceof Error) {
     for (let x = 0; x < chunkSize; x++) {
       for (let y = 0; y < chunkSize; y++) {
         for (let z = 0; z < chunkSize; z++) {
-          const index = (((halfSize*chunkSize)+(chunkX+x))*(chunkSize*totalChunks)+((halfSize*chunkSize)+(chunkZ+z)))*4
-          const height = 10+terrainData[index]*5
-          if (chunkY+y < height) {
-            setVoxel(chunkX+x, chunkY+y, chunkZ+z, chunkY+y < height - 1 ? 1 : 2)
+          const index =
+            ((halfSize * chunkSize + (chunkX + x)) * (chunkSize * totalChunks) +
+              (halfSize * chunkSize + (chunkZ + z))) *
+            4
+          const height = 10 + terrainData[index] * 5
+          if (chunkY + y < height) {
+            setVoxel(chunkX + x, chunkY + y, chunkZ + z, chunkY + y < height - 1 ? 1 : 2)
           }
         }
       }
     }
-    writeChunk(VoxelComponent.chunkIdToEntity[VoxelComponent.computeChunkId(chunkX, chunkY, chunkZ)], worldUuid)  
-  }
-  else{
+    writeChunk(VoxelComponent.chunkIdToEntity[VoxelComponent.computeChunkId(chunkX, chunkY, chunkZ)], worldUuid)
+  } else {
     console.log(chunk)
     let i = 0
     for (let x = 0; x < chunkSize; x++) {

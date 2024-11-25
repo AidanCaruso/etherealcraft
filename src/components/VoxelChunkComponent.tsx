@@ -1,13 +1,10 @@
 import {
-  Engine,
   Entity,
   createEntity,
   defineComponent,
   defineQuery,
   getComponent,
   getOptionalComponent,
-  hasComponent,
-  removeComponent,
   setComponent
 } from '@ir-engine/ecs'
 import { matches } from '@ir-engine/hyperflux'
@@ -53,11 +50,7 @@ export const VoxelComponent = defineComponent({
   },
 
   onSet(entity, component, json) {
-    if(json?.worldName) component.worldName.set(json.worldName)
-  },
-
-  toJSON(entity, component) {
-    return({worldName: component.worldName.value})
+    if (json?.worldName) component.worldName.set(json.worldName)
   },
 
   chunkSize: 16,
@@ -201,7 +194,7 @@ export const VoxelComponent = defineComponent({
           const voxel = VoxelComponent.getVoxel(voxelX, voxelY, voxelZ)
           if (voxel) {
             // voxel 0 is sky (empty) so for UVs we start at 0
-            const uvVoxel = voxel - 1
+            const uvVoxel = (voxel - 1) * 0.5
             // There is a voxel here but do we need faces for it?
             for (const { dir, corners, uvRow } of VoxelComponent.cubeFaces) {
               const neighbor = VoxelComponent.getVoxel(voxelX + dir[0], voxelY + dir[1], voxelZ + dir[2])
@@ -211,7 +204,7 @@ export const VoxelComponent = defineComponent({
                 for (const { pos, uv } of corners) {
                   positions.push(pos[0] + x, pos[1] + y, pos[2] + z)
                   normals.push(...dir)
-                  uvs.push(uvVoxel + uv[0], 1 - (uvRow + 1 - uv[1]))
+                  uvs.push(uvVoxel + uv[0] * 0.25, uvVoxel + uv[1] * 0.25)
                 }
                 indices.push(ndx, ndx + 1, ndx + 2, ndx + 2, ndx + 1, ndx + 3)
               }
@@ -313,7 +306,7 @@ export const VoxelComponent = defineComponent({
 export const VoxelChunkComponent = defineComponent({
   name: 'VoxelChunk',
   onInit: () => {
-    return { 
+    return {
       voxels: Uint8Array.from([]),
       id: ''
     }
